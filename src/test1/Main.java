@@ -18,7 +18,6 @@ public class Main extends Application{
         // TODO Auto-generated method stub
         Group root = new Group();
         Scene scene = new Scene(root);
-
         stage.setScene(scene);
         stage.show();
     }

@@ -11,11 +11,11 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
         Game G=new Game();
-        root = FXMLLoader.load(getClass().getResource("sample.fxml"));
-        primaryStage.setTitle("Hello World");
+        root = FXMLLoader.load(getClass().getResource("Background.fxml"));
+        primaryStage.setTitle("WILL-HERO");
         primaryStage.setScene(new Scene(root));
+        primaryStage.setResizable(false);
         primaryStage.show();
-//        new Controller().move();
     }
 
 
