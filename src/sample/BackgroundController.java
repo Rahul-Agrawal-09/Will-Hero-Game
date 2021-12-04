@@ -9,7 +9,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
 
-public class Background {
+public class BackgroundController {
     @FXML
     private ImageView BackgroundImage;
     @FXML
@@ -23,7 +23,7 @@ public class Background {
     @FXML
     private AnchorPane CloudPane;
 
-    public Background(){
+    public BackgroundController(){
         Timeline tl=new Timeline();
         tl.setCycleCount(Animation.INDEFINITE);
         tl.getKeyFrames().add(new KeyFrame(Duration.millis(11),event->{

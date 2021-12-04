@@ -6,16 +6,13 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 
 public class GameConsole {
-
-    @FXML
-    private ImageView Hero;
-
     @FXML
     private AnchorPane HomePage;
-
     @FXML
-    void move(MouseEvent event) {
-        Hero.setLayoutX(Hero.getLayoutX()+50);
+    private ImageView StartButton;
+    @FXML
+    void StartNewGame(MouseEvent event) {
+        //fade out and start the New game of the background
     }
 
 }
