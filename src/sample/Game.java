@@ -19,7 +19,6 @@ public class Game {
         Timeline tl=new Timeline();
         tl.setCycleCount(Animation.INDEFINITE);
         tl.getKeyFrames().add(new KeyFrame(Duration.millis(1000), new TimeHandler()));
-//        new Controller().move();
         tl.play();
     }
 
@@ -28,7 +27,7 @@ public class Game {
         @Override
         public void handle(ActionEvent event){
             TranslateTransition translate=new TranslateTransition();
-//            translate.setNode(orcs);
+//            translate.setNode();
             translate.setDuration(Duration.millis(500));
             translate.setByX(100);
             translate.play();

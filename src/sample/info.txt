@@ -1,0 +1,10 @@
+
+
+Player forward movement distance=> 125 px
+Player jump height => 73 px
+image to left = origin x
+image to top = origin y
+getFitHeight fro getting height of the imageview
+total 122 steps
+
+total width=16000 px

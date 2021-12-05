@@ -10,14 +10,13 @@ public class Main extends Application {
     public static Parent root;
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Game G=new Game();
-        root = FXMLLoader.load(getClass().getResource("Background.fxml"));
+//        Game G=new Game();
+        root = FXMLLoader.load(getClass().getResource("Parent_Background.fxml"));
         primaryStage.setTitle("WILL-HERO");
         primaryStage.setScene(new Scene(root));
         primaryStage.setResizable(false);
         primaryStage.show();
     }
-
 
     public static void main(String[] args) {
         launch(args);

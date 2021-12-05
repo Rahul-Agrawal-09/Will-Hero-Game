@@ -4,12 +4,16 @@ import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
 
-public class BackgroundController {
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class BackgroundController implements Initializable {
     @FXML
     private ImageView BackgroundImage;
     @FXML
@@ -22,8 +26,11 @@ public class BackgroundController {
     private ImageView Cloud4;
     @FXML
     private AnchorPane CloudPane;
+    @FXML
+    private AnchorPane ParentOfAll;
 
-    public BackgroundController(){
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
         Timeline tl=new Timeline();
         tl.setCycleCount(Animation.INDEFINITE);
         tl.getKeyFrames().add(new KeyFrame(Duration.millis(11),event->{
@@ -35,5 +42,4 @@ public class BackgroundController {
         } ));
         tl.play();
     }
-
 }
