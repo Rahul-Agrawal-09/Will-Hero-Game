@@ -27,7 +27,7 @@ public class Island extends GameObject{
         Island.Name.put(1,"IslandBig2.png"); IslandOffset.add(62.4);
         Island.Name.put(2,"IslandBlank.png"); IslandOffset.add(0.0);
         Island.Name.put(3,"IslandNoTree.png"); IslandOffset.add(0.0);
-        Island.Name.put(4,"IslandSmall.png"); IslandOffset.add(65.77);
+        Island.Name.put(4,"IslandSmall.png"); IslandOffset.add(35.83);
         Island.Name.put(5,"IslandSmallTree.png"); IslandOffset.add(44.26);
         Island.Name.put(6,"IslandWide.png"); IslandOffset.add(46.37);
         Island.Name.put(7,"IslandWideTree.png"); IslandOffset.add(60.28);
@@ -52,6 +52,12 @@ public class Island extends GameObject{
         }
     }
 
-
+    public static Island getIsland(ImageView IV){
+        for(Island I:Island.islands){
+            if(I.getImageView().equals(IV))
+                return I;
+        }
+        return null;
+    }
 
 }

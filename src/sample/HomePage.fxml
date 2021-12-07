@@ -7,7 +7,7 @@
 
 <AnchorPane fx:id="HomePage" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.GameConsole">
    <children>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#c9c9c9" height="450.0" opacity="0.3" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="800.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" height="450.0" opacity="0.21" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="800.0" />
       <ImageView fx:id="WillHeroName" fitHeight="150.0" fitWidth="220.0" layoutX="290.0" layoutY="67.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@assets/WillHeroName.png" />
