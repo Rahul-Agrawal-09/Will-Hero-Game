@@ -8,17 +8,11 @@ public abstract class GameObject {
     private final Double ImageWidth;
     private final Double IgnoreHeight;
 
-    public GameObject(ImageView image){
-        this.Element=image;
-        this.ImageHeight=image.getFitHeight();
-        this.ImageWidth=image.getFitWidth();
-        this.IgnoreHeight =0.0;
-    }
 
     public GameObject(ImageView image, Double D){
         this.Element=image;
-        this.ImageHeight=image.getFitHeight();  //not adjusting ignore_height here
-        this.ImageWidth=image.getFitWidth();
+        this.ImageHeight=image.getBoundsInLocal().getHeight();  //not adjusting ignore_height here
+        this.ImageWidth=image.getBoundsInLocal().getWidth();
         this.IgnoreHeight =D;
     }
 
@@ -44,6 +38,18 @@ public abstract class GameObject {
 
     public void IncreseY(Integer I){
         this.Element.setLayoutY(this.Element.getLayoutY()+I);
+    }
+
+    public ImageView getImageView(){
+        return this.Element;
+    }
+
+    public Double getImageHeight(){
+        return this.ImageHeight;
+    }
+
+    public Double getImageWidth(){
+        return this.ImageWidth;
     }
 
 }
