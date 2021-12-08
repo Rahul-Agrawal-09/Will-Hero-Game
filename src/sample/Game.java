@@ -8,11 +8,16 @@ import javafx.scene.layout.AnchorPane;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.net.URL;
+import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 
 public class Game implements Initializable {
     private Hero hero;
+    private static ArrayList<Double> xCoordinates;
+    private static ArrayList<Double> yCoordinates;
+    private static ArrayList<Integer> AllIsland;
     private Island currentIsland;
     @FXML
     private AnchorPane FirstIslandPane;
@@ -31,6 +36,9 @@ public class Game implements Initializable {
         hero.getImageView().setLayoutY(this.currentIsland.getyPositionTop()-hero.getImageHeight());
         Thread t1=new Thread(hero);
         t1.start();
+//        Game.AllIsland.add(6);
+//        Game.xCoordinates.add(50.0);
+//        Game.yCoordinates.add(500.0);
     }
 
     private void setupHomePane(){
@@ -38,7 +46,7 @@ public class Game implements Initializable {
         this.currentIsland=Island.islands.get(6);
         ImageView IV = currentIsland.getImageView();
         IV.setLayoutY(230.0);
-        IV.setLayoutX(35);
+        IV.setLayoutX(35.0);
         FirstIslandPane.getChildren().add(IV);
     }
 

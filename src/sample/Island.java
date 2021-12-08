@@ -55,6 +55,7 @@ public class Island extends GameObject{
             IV.setImage(new Image(input));
             IV.setPreserveRatio(true);
             IV.setFitWidth(IV.getBoundsInLocal().getWidth()*0.414556962);
+            System.out.println((int)IV.getFitWidth());
             Island.islands.add(new Island(IV,Island.IslandOffset.get(i)));
         }
     }

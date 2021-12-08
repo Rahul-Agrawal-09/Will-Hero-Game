@@ -1,10 +1,24 @@
 
 
 Player forward movement distance=> 125 px
-Player jump height => 73 px
+Player jump height => 68 px
 image to left = origin x
 image to top = origin y
 getFitHeight fro getting height of the imageview
 total 122 steps
+
+Max height difference= 25px
+
+Actual width of each island:
+166.237341762
+145.924050624
+165.8227848
+283.97151897
+53.063291136
+56.794303793999994
+319.20886074
+136.389240498
+261.999999984
+252.050632896
 
 total width=16000 px
