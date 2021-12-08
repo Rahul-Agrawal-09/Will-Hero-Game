@@ -1,11 +1,16 @@
 package sample;
 
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.util.Duration;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -14,7 +19,9 @@ public class Island extends GameObject{
     private static final HashMap<Integer,String> Name=new HashMap<>();
     private static final ArrayList<Double> IslandOffset =new ArrayList<>();
     private static AnchorPane pane;
-    public static ArrayList<Island> islands= new ArrayList<>();;
+    private Double LaunchSpeed=150.0;
+    private Double SpeedDecrement=1.5;
+    public static ArrayList<Island> islands= new ArrayList<>();
 
     public Island(ImageView image, Double offset){
         super(image,offset);
@@ -60,4 +67,20 @@ public class Island extends GameObject{
         return null;
     }
 
+    public void setMotion (Double speed){
+        Timeline tl=new Timeline();
+        Double mean=this.getyPositionBottom();
+        tl.setCycleCount(Animation.INDEFINITE);
+        tl.getKeyFrames().add(new KeyFrame(Duration.millis(speed), event->{
+            if(this.getyPositionBottom()>mean){
+                this.LaunchSpeed +=this.SpeedDecrement;
+            }
+            else {
+                this.LaunchSpeed -=this.SpeedDecrement;
+            }
+            double p=((this.LaunchSpeed)-120)/100;
+            super.getImageView().setLayoutY(super.getImageView().getLayoutY()-p);
+        } ));
+        tl.play();
+    }
 }
