@@ -2,9 +2,8 @@
 
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane fx:id="IslandPane" prefHeight="450.0" prefWidth="1600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Game">
+<AnchorPane fx:id="ViewIslandPane" prefHeight="450.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Game">
    <children>
-      <AnchorPane fx:id="FirstIslandPane" prefHeight="450.0" prefWidth="800.0" />
-      <AnchorPane fx:id="SecondIslandPane" layoutX="800.0" prefHeight="450.0" prefWidth="800.0" />
+      <AnchorPane fx:id="AllIslandPane" prefHeight="450.0" prefWidth="1600.0" />
    </children>
 </AnchorPane>

@@ -41,5 +41,6 @@ public class BackgroundController implements Initializable {
             }
         } ));
         tl.play();
+        GameConsole.setPrimaryStage(ParentOfAll);
     }
 }

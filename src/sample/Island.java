@@ -19,8 +19,6 @@ public class Island extends GameObject{
     private static final HashMap<Integer,String> Name=new HashMap<>();
     private static final ArrayList<Double> IslandOffset =new ArrayList<>();
     private static AnchorPane pane;
-    private Double LaunchSpeed=150.0;
-    private Double SpeedDecrement=1.5;
     public static ArrayList<Island> islands= new ArrayList<>();
 
     public Island(ImageView image, Double offset){
@@ -55,7 +53,7 @@ public class Island extends GameObject{
             IV.setImage(new Image(input));
             IV.setPreserveRatio(true);
             IV.setFitWidth(IV.getBoundsInLocal().getWidth()*0.414556962);
-            System.out.println((int)IV.getFitWidth());
+//            System.out.println((int)IV.getFitWidth());
             Island.islands.add(new Island(IV,Island.IslandOffset.get(i)));
         }
     }
@@ -68,20 +66,20 @@ public class Island extends GameObject{
         return null;
     }
 
-    public void setMotion (Double speed){
-        Timeline tl=new Timeline();
-        Double mean=this.getyPositionBottom();
-        tl.setCycleCount(Animation.INDEFINITE);
-        tl.getKeyFrames().add(new KeyFrame(Duration.millis(speed), event->{
-            if(this.getyPositionBottom()>mean){
-                this.LaunchSpeed +=this.SpeedDecrement;
-            }
-            else {
-                this.LaunchSpeed -=this.SpeedDecrement;
-            }
-            double p=((this.LaunchSpeed)-120)/100;
-            super.getImageView().setLayoutY(super.getImageView().getLayoutY()-p);
-        } ));
-        tl.play();
-    }
+//    public void setMotion (Double speed){
+//        Timeline tl=new Timeline();
+//        Double mean=this.getyPositionBottom();
+//        tl.setCycleCount(Animation.INDEFINITE);
+//        tl.getKeyFrames().add(new KeyFrame(Duration.millis(speed), event->{
+//            if(this.getyPositionBottom()>mean){
+//                this.LaunchSpeed +=this.SpeedDecrement;
+//            }
+//            else {
+//                this.LaunchSpeed -=this.SpeedDecrement;
+//            }
+//            double p=((this.LaunchSpeed)-120)/100;
+//            super.getImageView().setLayoutY(super.getImageView().getLayoutY()-p);
+//        } ));
+//        tl.play();
+//    }
 }
