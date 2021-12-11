@@ -4,6 +4,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -22,7 +23,12 @@ public class Game implements Initializable {
     @FXML
     private AnchorPane ViewIslandPane;
 
-
+    @FXML
+    void MoveHero(MouseEvent event) {
+        hero.move();
+        AllIslandPane.setLayoutX(AllIslandPane.getLayoutX()-125);
+//        hero.setCurrentIsland(this.updateCurrentIsland());
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -33,18 +39,18 @@ public class Game implements Initializable {
         addAllIsland(); //final
         setupHero();
         setupHomePane();
-
-//        Game.AllIsland.add(6);
-//        Game.xCoordinates.add(50.0);
-//        Game.yCoordinates.add(500.0);
     }
+
+
 
     private void setupHomePane(){
         //setup the starting island and other elements
-        ImageView IV = Island.islands.get(AllIsland.get(0)).getImageView();
-        IV.setLayoutY(230.0);
-        IV.setLayoutX(Game.xCoordinates.get(0));
-        AllIslandPane.getChildren().add(IV);
+        for(int i=0;i<2;i++){
+            ImageView IV = Island.islands.get(AllIsland.get(i)).getImageView();
+            IV.setLayoutY(230.0);
+            IV.setLayoutX(Game.xCoordinates.get(i));
+            AllIslandPane.getChildren().add(IV);
+        }
     }
 
     private ImageView setupHeroImage(){
@@ -75,7 +81,9 @@ public class Game implements Initializable {
         for(Node IV:AllIslandPane.getChildren()){
             if(hero.getxPositionLeft()>IV.getLayoutX() &&
                     (hero.getxPositionRight()<(IV.getLayoutX()+IV.getBoundsInLocal().getWidth()))){
-                return Island.getIsland((ImageView) IV);
+                Island I=Island.getIsland((ImageView) IV);
+                if(I!=null && hero.getyPositionBottom()<I.getyPositionTop())
+                    return I;
             }
         }
         return null;

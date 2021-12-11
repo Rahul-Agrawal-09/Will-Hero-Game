@@ -32,11 +32,11 @@ public abstract class GameObject {
         return this.Element.getLayoutY()+this.ImageHeight;
     }
 
-    public void IncreseX(Integer I){
+    public void IncreseX(Double I){
         this.Element.setLayoutX(this.Element.getLayoutX()+I);
     }
 
-    public void IncreseY(Integer I){
+    public void IncreseY(Double I){
         this.Element.setLayoutY(this.Element.getLayoutY()+I);
     }
 

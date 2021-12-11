@@ -20,6 +20,7 @@ import java.util.ResourceBundle;
 
 public class GameConsole implements Initializable {
     private static AnchorPane primaryPane;
+    private Island H;
 
     @FXML
     private AnchorPane LoadingPane;
@@ -70,23 +71,39 @@ public class GameConsole implements Initializable {
 
     private void setDemoHero(){
 
+
     }
+
+    private Double launchSpeed=350.0;
+    private void DemoHeroHop(){
+            Timeline tl=new Timeline();
+            tl.setCycleCount(Animation.INDEFINITE);
+            tl.getKeyFrames().add(new KeyFrame(Duration.millis(5), event->{
+                if(H.getyPositionBottom() > -50)
+                    this.launchSpeed =350.0;
+                double p=((this.launchSpeed)-205)/100;
+                this.launchSpeed -=1.5;
+                H.IncreseY(-p);
+            } ));
+            tl.play();
+    }
+
 
     private void setupBackgroundelements(Integer duration, Integer way){
         Island I1=new Island(IslandMid, 100.0);
         Island I2=new Island(IslandRight,0.0);
-        Island I3=new Island(IslandHomePage,50.0);
+        Island heroIsland = new Island(IslandHomePage, 10.0);
         Island exitButton=new Island(ExitButton,0.0);
         Island loadSavedButton=new Island(LoadSavedButton,0.0);
-        Island H=new Island(hero,0.0);
-        Island I=new Island(orcs,0.0);     //this is the orcs
+        H=new Island(hero,0.0);
+        Island orcs=new Island(this.orcs,0.0);     //this is the orcs
         Translate(I1,0.0,-250.0,duration,way);
         Translate(I2,-200.0,0.0,duration,way);
-        Translate(I3,0.0,-250.0,duration,way);
+        Translate(heroIsland,0.0,-250.0,duration,way);
         Translate(exitButton,100.0,0.0,duration,way);
         Translate(loadSavedButton,-100.0,0.0,duration,way);
         Translate(H,0.0,335.0,duration,way);
-        Translate(I,0.0,320.0,duration,way);
+        Translate(orcs,0.0,320.0,duration,way);
         if(way==1){
             Fade(WillHeroName,0.0,1.0,duration);
             Fade(StartButton,0.0,1.0,duration);
@@ -95,7 +112,10 @@ public class GameConsole implements Initializable {
             Fade(WillHeroName,1.0,0.0,duration);
             Fade(StartButton,1.0,0.0,duration);
         }
-        setMotion(I1,40.0);
+        setMotion(I1,100.0);
+        setMotion(orcs,100.0);
+        setMotion(I2,50.0);
+        DemoHeroHop();
     }
 
     private void Fade(Node IV, Double from, Double to, Integer time){
@@ -128,14 +148,14 @@ public class GameConsole implements Initializable {
             else {
                 this.LaunchSpeed -=this.SpeedDecrement;
             }
-            double p=((this.LaunchSpeed)-120)/100;
+            double p=((this.LaunchSpeed)-100)/100;
             gameobject.getImageView().setLayoutY(gameobject.getImageView().getLayoutY()-p);
         } ));
         tl.play();
     }
 
     private void LoadNewGamePane(){
-        //Removed Game consol Pane (HomePage)
+        //Removed Game console Pane (HomePage)
         primaryPane.getChildren().remove(HomePage);
         //Adding Game Pane
         try {

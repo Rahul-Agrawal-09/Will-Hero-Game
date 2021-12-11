@@ -4,6 +4,6 @@
 
 <AnchorPane fx:id="ViewIslandPane" prefHeight="450.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Game">
    <children>
-      <AnchorPane fx:id="AllIslandPane" prefHeight="450.0" prefWidth="1600.0" />
+      <AnchorPane fx:id="AllIslandPane" onMouseClicked="#MoveHero" prefHeight="450.0" prefWidth="1600.0" />
    </children>
 </AnchorPane>
