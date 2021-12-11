@@ -95,9 +95,10 @@ public class Game implements Initializable {
         hero.setPane(AllIslandPane);
         hero.getImageView().setLayoutX(200);
         hero.getImageView().setLayoutY(Island.islands.get(AllIslandNumbers.get(0)).getyPositionTop()-hero.getImageHeight());
-//        Thread t1=new Thread(hero);
-        hero.hop();
-        hero.MoveTimeline();
+        Thread t1=new Thread(hero);
+//        hero.hop();
+//        hero.MoveTimeline();
+        t1.start();
     }
 
     public Island updateCurrentIsland(){
@@ -108,16 +109,8 @@ public class Game implements Initializable {
                     return I;
                 }
             }
-            System.out.println(I.getxPositionLeft()+"    "+I.getxPositionRight()+"   "+hero.getxPositionRight());
+//            System.out.println(I.getxPositionLeft()+"    "+I.getxPositionRight()+"   "+hero.getxPositionRight());
         }
-//        for(Node IV:AllIslandPane.getChildren()){
-//            if(hero.getxPositionRight()>IV.getLayoutX() &&
-//                    (hero.getxPositionLeft()<(IV.getLayoutX()+IV.getBoundsInLocal().getWidth()))){
-//                Island I=Island.getIsland((ImageView) IV);
-//                if(I!=null && hero.getyPositionBottom()<I.getyPositionTop())
-//                    return I;
-//            }
-//        }
         return null;
     }
 
