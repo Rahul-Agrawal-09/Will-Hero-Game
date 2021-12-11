@@ -1,9 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
 <AnchorPane fx:id="ViewIslandPane" prefHeight="450.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Game">
    <children>
-      <AnchorPane fx:id="AllIslandPane" onMouseClicked="#MoveHero" prefHeight="450.0" prefWidth="1600.0" />
+      <AnchorPane fx:id="AllIslandPane" onMouseClicked="#MoveHero" prefHeight="450.0" prefWidth="2200.0" />
+      <ImageView fx:id="SaveGameButton" fitHeight="40.0" fitWidth="40.0" layoutX="10.0" layoutY="-60.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@assets/SaveButton.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="CloseGameButton" fitHeight="40.0" fitWidth="40.0" layoutX="750.0" layoutY="-60.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@assets/BackButton.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

@@ -18,7 +18,7 @@ public class Hero extends GameObject implements Runnable{
     public Hero(ImageView IV, Game game){
         super(IV,0.0);
         this.game=game;
-        this.LaunchSpeedY =350.0;
+        this.LaunchSpeedY=350.0;
         this.LaunchSpeedX=350.0;
         this.DoMove=false;
     }
@@ -36,21 +36,22 @@ public class Hero extends GameObject implements Runnable{
         this.currentIsland=CI;
     }
 
-    private void MoveTimeline(){
+    public void MoveTimeline(){
         Timeline tl=new Timeline();
         final Double[] total = {0.0};
         tl.setCycleCount(Animation.INDEFINITE);
-        tl.getKeyFrames().add(new KeyFrame(Duration.millis(5),event->{
+        tl.getKeyFrames().add(new KeyFrame(Duration.millis(4),event->{
             if(DoMove){
                 this.LaunchSpeedX =300.0;
-                double p=((this.LaunchSpeedX))/100;
-                this.LaunchSpeedX -=1.5;
+                double p=((this.LaunchSpeedX))/80;
+                this.LaunchSpeedX -=1.0;
                 this.IncreseX(p);
                 total[0] +=p;
                 if(total[0]>=125.0){
                     total[0]=0.0;
                     DoMove=false;
                     this.currentIsland=game.updateCurrentIsland();
+                    System.out.println(this.currentIsland);
                 }
             }
         }));

@@ -48,6 +48,10 @@ public abstract class GameObject {
         return this.ImageHeight;
     }
 
+    public Double getOffset(){
+        return this.IgnoreHeight;
+    }
+
     public Double getImageWidth(){
         return this.ImageWidth;
     }

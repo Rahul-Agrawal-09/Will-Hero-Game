@@ -14,7 +14,7 @@ import java.sql.Time;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Island extends GameObject{
+public class Island extends GameObject implements Cloneable{
     private static final String path=System.getProperty("user.dir")+"\\src\\sample\\assets\\";
     private static final HashMap<Integer,String> Name=new HashMap<>();
     private static final ArrayList<Double> IslandOffset =new ArrayList<>();
@@ -25,6 +25,14 @@ public class Island extends GameObject{
         super(image,offset);
     }
 
+    public Island clone() throws CloneNotSupportedException {
+        ImageView IV=new ImageView();
+        IV.setImage(this.getImageView().getImage());
+        IV.setPreserveRatio(true);
+        IV.setFitWidth(IV.getBoundsInLocal().getWidth()*0.414556962);
+        IV.setLayoutX(this.getxPositionLeft());
+        return new Island(IV,this.getOffset());
+    }
 
     public static void setPane(AnchorPane AP){
         Island.pane=AP;
