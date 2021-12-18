@@ -5,13 +5,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.shape.Rectangle;
-import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.IOException;
@@ -59,19 +55,14 @@ public class GameConsole implements Initializable {
     void StartNewGame(MouseEvent event) {
         Fade(LoadingPane.getChildren().get(0),0.0,1.0,1000);
         Fade(LoadingPane.getChildren().get(1),0.0,1.0,1000); // circle
-        setupBackgroundelements(1000,-1);
+        setBackgroundelements(1000,-1);
 //        sleep(5000);          //problem check sleep
         LoadNewGamePane();      //comment this to see loading page
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        setupBackgroundelements(1500,1);
-    }
-
-    private void setDemoHero(){
-
-
+        setBackgroundelements(1500,1);
     }
 
     private Double launchSpeed=350.0;
@@ -89,7 +80,7 @@ public class GameConsole implements Initializable {
     }
 
 
-    private void setupBackgroundelements(Integer duration, Integer way){
+    private void setBackgroundelements(Integer duration, Integer way){
         Island I1=new Island(IslandMid, 100.0);
         Island I2=new Island(IslandRight,0.0);
         Island heroIsland = new Island(IslandHomePage, 10.0);

@@ -16,12 +16,12 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 
-public class Game implements Initializable {
+public final class Game implements Initializable {
     private Hero hero;
-    private static ArrayList<Double> xCoordinates;
-    private static ArrayList<Double> yCoordinates;
-    private static ArrayList<Integer> AllIslandNumbers;
-    private static ArrayList<Island> AllIsland;
+    private static final ArrayList<Double> xCoordinates=new ArrayList<>();
+    private static final ArrayList<Double> yCoordinates=new ArrayList<>();
+    private static final ArrayList<Integer> AllIslandNumbers=new ArrayList<>();
+    private static final ArrayList<Island> AllIsland=new ArrayList<>();
 
     @FXML
     private AnchorPane AllIslandPane;
@@ -42,16 +42,14 @@ public class Game implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        xCoordinates=new ArrayList<>();
-        yCoordinates=new ArrayList<>();
-        AllIslandNumbers =new ArrayList<>();
-        AllIsland=new ArrayList<>();
         Translate(CloseGameButton,0.0,70.0,500,1);
         Translate(SaveGameButton,0.0,70.0,500,1);
-        Island.setPane(AllIslandPane);  // final
+        Island.initialiseIslands(AllIslandPane);  // final
+        Orc.initialiseOrcs(AllIslandPane); //final
         addAllIsland(); //final
-        setupHomePane();
+        PlaceIslands();
         setupHero();    //final
+        AllIsland.get(0).placeOrcs(0); //temp
     }
 
     private void MoveAllIslandPane(Integer moveBackTime){
@@ -59,20 +57,28 @@ public class Game implements Initializable {
     }
 
 
-    private void setupHomePane(){
-        //setup the starting island and other elements
+    private void PlaceIslands(){
+        //setting up the starting island and other elements
             try {
                 for(int i=0;i<10;i++){
                     Island I=Island.islands.get(AllIslandNumbers.get(i)).clone();
-                    ImageView IV = I.getImageView();
-                    IV.setLayoutY(230.0);
-                    IV.setLayoutX(Game.xCoordinates.get(i));
-                    AllIslandPane.getChildren().add(IV);
+                    I.IncreseY(230.0);
+                    I.IncreseX(Game.xCoordinates.get(i));
+                    AllIslandPane.getChildren().add(I.getImageView());
                     AllIsland.add(I);
                 }
             } catch (CloneNotSupportedException e) {
                 e.printStackTrace();
             }
+    }
+
+    private void setupHero(){
+        hero=new Hero(setupHeroImage(),this);
+        hero.setPane(AllIslandPane);
+        hero.getImageView().setLayoutX(200);
+        hero.getImageView().setLayoutY(Island.islands.get(AllIslandNumbers.get(0)).getyPositionTop()-hero.getImageHeight());
+        Thread t1=new Thread(hero);
+        t1.start();
     }
 
     private ImageView setupHeroImage(){
@@ -88,17 +94,6 @@ public class Game implements Initializable {
             System.out.println("Error: getting Hero Image");
             return null;
         }
-    }
-
-    private void setupHero(){
-        hero=new Hero(setupHeroImage(),this);
-        hero.setPane(AllIslandPane);
-        hero.getImageView().setLayoutX(200);
-        hero.getImageView().setLayoutY(Island.islands.get(AllIslandNumbers.get(0)).getyPositionTop()-hero.getImageHeight());
-        Thread t1=new Thread(hero);
-//        hero.hop();
-//        hero.MoveTimeline();
-        t1.start();
     }
 
     public Island updateCurrentIsland(){

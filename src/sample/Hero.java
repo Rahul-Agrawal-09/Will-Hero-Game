@@ -3,11 +3,15 @@ package sample;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
 
-public class Hero extends GameObject implements Runnable{
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+
+public final class Hero extends GameObject implements Runnable{
     private final Game game;
     private Island currentIsland;
     private AnchorPane pane;
@@ -89,4 +93,5 @@ public class Hero extends GameObject implements Runnable{
             return false;
         return this.getyPositionBottom() > currentIsland.getyPositionTop();
     }
+
 }

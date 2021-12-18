@@ -13,7 +13,7 @@ import javafx.util.Duration;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class BackgroundController implements Initializable {
+public final class BackgroundController implements Initializable {
     @FXML
     private ImageView BackgroundImage;
     @FXML

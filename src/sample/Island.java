@@ -1,20 +1,15 @@
 package sample;
 
-import javafx.animation.Animation;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.util.Duration;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Island extends GameObject implements Cloneable{
+public class Island extends GameObject{
     private static final String path=System.getProperty("user.dir")+"\\src\\sample\\assets\\";
     private static final HashMap<Integer,String> Name=new HashMap<>();
     private static final ArrayList<Double> IslandOffset =new ArrayList<>();
@@ -25,16 +20,12 @@ public class Island extends GameObject implements Cloneable{
         super(image,offset);
     }
 
+    @Override
     public Island clone() throws CloneNotSupportedException {
-        ImageView IV=new ImageView();
-        IV.setImage(this.getImageView().getImage());
-        IV.setPreserveRatio(true);
-        IV.setFitWidth(IV.getBoundsInLocal().getWidth()*0.414556962);
-        IV.setLayoutX(this.getxPositionLeft());
-        return new Island(IV,this.getOffset());
+        return  (Island) super.clone();
     }
 
-    public static void setPane(AnchorPane AP){
+    public static void initialiseIslands(AnchorPane AP){
         Island.pane=AP;
         Island.Name.put(0,"IslandBig.png"); IslandOffset.add(65.77);
         Island.Name.put(1,"IslandBig2.png"); IslandOffset.add(62.4);
@@ -61,9 +52,12 @@ public class Island extends GameObject implements Cloneable{
             IV.setImage(new Image(input));
             IV.setPreserveRatio(true);
             IV.setFitWidth(IV.getBoundsInLocal().getWidth()*0.414556962);
-//            System.out.println((int)IV.getFitWidth());
             Island.islands.add(new Island(IV,Island.IslandOffset.get(i)));
         }
+    }
+
+    public void placeOrcs(Integer whichOrc){
+        Orc.GreenOrcs.get(whichOrc).setOrcIsland(this);
     }
 
     public static Island getIsland(ImageView IV){
@@ -73,21 +67,4 @@ public class Island extends GameObject implements Cloneable{
         }
         return null;
     }
-
-//    public void setMotion (Double speed){
-//        Timeline tl=new Timeline();
-//        Double mean=this.getyPositionBottom();
-//        tl.setCycleCount(Animation.INDEFINITE);
-//        tl.getKeyFrames().add(new KeyFrame(Duration.millis(speed), event->{
-//            if(this.getyPositionBottom()>mean){
-//                this.LaunchSpeed +=this.SpeedDecrement;
-//            }
-//            else {
-//                this.LaunchSpeed -=this.SpeedDecrement;
-//            }
-//            double p=((this.LaunchSpeed)-120)/100;
-//            super.getImageView().setLayoutY(super.getImageView().getLayoutY()-p);
-//        } ));
-//        tl.play();
-//    }
 }

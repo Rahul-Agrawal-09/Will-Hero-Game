@@ -2,12 +2,22 @@ package sample;
 
 import javafx.scene.image.ImageView;
 
-public abstract class GameObject {
-    private final ImageView Element;
+public abstract class GameObject implements Cloneable {
+    private ImageView Element;
     private final Double ImageHeight;
     private final Double ImageWidth;
     private final Double IgnoreHeight;
 
+    public GameObject clone() throws CloneNotSupportedException {
+        GameObject GO=(GameObject) super.clone();
+        ImageView IV=new ImageView();
+        IV.setImage(this.getImageView().getImage());
+        IV.setPreserveRatio(true);
+        IV.setFitWidth(this.getImageWidth());
+        IV.setLayoutX(this.getxPositionLeft());
+        GO.Element=IV;
+        return GO;
+    }
 
     public GameObject(ImageView image, Double D){
         this.Element=image;
