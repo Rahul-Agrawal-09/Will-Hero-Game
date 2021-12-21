@@ -1,9 +1,13 @@
 package sample;
 
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.fxml.Initializable;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.util.Duration;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -20,11 +24,24 @@ public abstract class Orc extends GameObject implements Cloneable{
         super(image, 0.0);
     }
 
-    protected void setOrcIsland(Island island) {
-        this.myIsland = island;
-        this.IncreseX(island.getxPositionLeft());
-        this.IncreseY(island.getyPositionTop()-this.getImageHeight());
-        Orc.pane.getChildren().add(this.getImageView());
+    protected void AddOrcToIsland(Island island) {
+        try {
+            Orc orc= this.clone();
+            orc.myIsland = island;
+            orc.getImageView().setLayoutX(island.getxPositionLeft());
+            orc.IncreseY(island.getyPositionTop()-orc.getImageHeight());
+            Orc.pane.getChildren().add(orc.getImageView());
+            orc.HopOrc();
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public Orc clone() throws CloneNotSupportedException {
+        Orc clone=(Orc) super.clone();
+//        clone.getImageView().setLayoutX(clone.myIsland.getxPositionLeft());
+        return clone;
     }
 
     public static void initialiseOrcs(AnchorPane AP){
@@ -43,6 +60,27 @@ public abstract class Orc extends GameObject implements Cloneable{
         catch (FileNotFoundException e){
             System.out.println("Error: Orcs Image Not found");
         }
+    }
+
+    private Double LaunchSpeedY=350.0;
+    private void HopOrc(){
+        Timeline tl =new Timeline();
+        tl.setCycleCount(Animation.INDEFINITE);
+        tl.getKeyFrames().add(new KeyFrame(Duration.millis(5), event->{
+            if(this.OcsHitIsland()){
+                this.LaunchSpeedY =350.0;
+            }
+            double p=((this.LaunchSpeedY)-190)/100;
+            this.LaunchSpeedY -=1.5;
+            super.IncreseY(-p);
+        } ));
+        tl.play();
+    }
+
+    private boolean OcsHitIsland(){
+        if(myIsland==null)
+            return false;
+        return this.getyPositionBottom() > myIsland.getyPositionTop();
     }
 
 

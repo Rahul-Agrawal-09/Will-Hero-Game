@@ -45,11 +45,11 @@ public final class Game implements Initializable {
         Translate(CloseGameButton,0.0,70.0,500,1);
         Translate(SaveGameButton,0.0,70.0,500,1);
         Island.initialiseIslands(AllIslandPane);  // final
-        Orc.initialiseOrcs(AllIslandPane); //final
         addAllIsland(); //final
+        Orc.initialiseOrcs(AllIslandPane); //final
         PlaceIslands();
         setupHero();    //final
-        AllIsland.get(0).placeOrcs(0); //temp
+//        AllIsland.get(0).placeOrcs(0); //temp
     }
 
     private void MoveAllIslandPane(Integer moveBackTime){
@@ -64,6 +64,7 @@ public final class Game implements Initializable {
                     Island I=Island.islands.get(AllIslandNumbers.get(i)).clone();
                     I.IncreseY(230.0);
                     I.IncreseX(Game.xCoordinates.get(i));
+                    I.placeOrcs(0);
                     AllIslandPane.getChildren().add(I.getImageView());
                     AllIsland.add(I);
                 }
@@ -96,11 +97,11 @@ public final class Game implements Initializable {
         }
     }
 
-    public Island updateCurrentIsland(){
+    public static Island updateCurrentIsland(GameObject gameObject){
         for(Island I:AllIsland){
-            if(hero.getxPositionRight()>I.getxPositionLeft() &&
-                    (hero.getxPositionLeft()<I.getxPositionRight())){
-                if(hero.getyPositionBottom()<I.getyPositionTop()){
+            if(gameObject.getxPositionRight()>I.getxPositionLeft() &&
+                    (gameObject.getxPositionLeft()<I.getxPositionRight())){
+                if(gameObject.getyPositionBottom()<I.getyPositionTop()){
                     return I;
                 }
             }

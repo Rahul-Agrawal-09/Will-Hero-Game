@@ -14,8 +14,8 @@ public abstract class GameObject implements Cloneable {
         IV.setImage(this.getImageView().getImage());
         IV.setPreserveRatio(true);
         IV.setFitWidth(this.getImageWidth());
-        IV.setLayoutX(this.getxPositionLeft());
         GO.Element=IV;
+        GO.IncreseX(this.getxPositionLeft());
         return GO;
     }
 

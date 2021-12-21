@@ -22,7 +22,7 @@ public class Island extends GameObject{
 
     @Override
     public Island clone() throws CloneNotSupportedException {
-        return  (Island) super.clone();
+        return (Island) super.clone();
     }
 
     public static void initialiseIslands(AnchorPane AP){
@@ -57,7 +57,7 @@ public class Island extends GameObject{
     }
 
     public void placeOrcs(Integer whichOrc){
-        Orc.GreenOrcs.get(whichOrc).setOrcIsland(this);
+        Orc.GreenOrcs.get(whichOrc).AddOrcToIsland(this);
     }
 
     public static Island getIsland(ImageView IV){

@@ -3,13 +3,9 @@ package sample;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
-
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 
 public final class Hero extends GameObject implements Runnable{
     private final Game game;
@@ -54,7 +50,7 @@ public final class Hero extends GameObject implements Runnable{
                 if(total[0]>=125.0){
                     total[0]=0.0;
                     DoMove=false;
-                    this.currentIsland=game.updateCurrentIsland();
+                    this.currentIsland=Game.updateCurrentIsland(this);
                     System.out.println(this.currentIsland);
                 }
             }
@@ -73,11 +69,11 @@ public final class Hero extends GameObject implements Runnable{
     }
 
     public void hop(){
-        this.currentIsland=game.updateCurrentIsland();
+        this.currentIsland=Game.updateCurrentIsland(this);
         Timeline tl =new Timeline();
         tl.setCycleCount(Animation.INDEFINITE);
         tl.getKeyFrames().add(new KeyFrame(Duration.millis(5), event->{
-            if(this.IsHeroAboveIsland()){
+            if(this.HeroHitIsland()){
                 this.LaunchSpeedY =350.0;
             }
             double p=((this.LaunchSpeedY)-205)/100;
@@ -88,7 +84,7 @@ public final class Hero extends GameObject implements Runnable{
         tl.play();
     }
 
-    private boolean IsHeroAboveIsland(){
+    private boolean HeroHitIsland(){
         if(currentIsland==null)
             return false;
         return this.getyPositionBottom() > currentIsland.getyPositionTop();
