@@ -8,6 +8,7 @@ public abstract class GameObject implements Cloneable {
     private final Double ImageWidth;
     private final Double IgnoreHeight;
 
+    @Override
     public GameObject clone() throws CloneNotSupportedException {
         GameObject GO=(GameObject) super.clone();
         ImageView IV=new ImageView();

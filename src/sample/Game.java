@@ -17,9 +17,9 @@ import java.util.ResourceBundle;
 
 
 public final class Game implements Initializable {
-    private Hero hero;
-    private static final ArrayList<Double> xCoordinates=new ArrayList<>();
-    private static final ArrayList<Double> yCoordinates=new ArrayList<>();
+    public static Hero hero;
+    private static final ArrayList<Double> xCoordinatesIsland =new ArrayList<>();
+    private static final ArrayList<Double> yCoordinatesIsland =new ArrayList<>();
     private static final ArrayList<Integer> AllIslandNumbers=new ArrayList<>();
     private static final ArrayList<Island> AllIsland=new ArrayList<>();
 
@@ -46,10 +46,8 @@ public final class Game implements Initializable {
         Translate(SaveGameButton,0.0,70.0,500,1);
         Island.initialiseIslands(AllIslandPane);  // final
         addAllIsland(); //final
-        Orc.initialiseOrcs(AllIslandPane); //final
-        PlaceIslands();
+        PlaceIslands(); //final
         setupHero();    //final
-//        AllIsland.get(0).placeOrcs(0); //temp
     }
 
     private void MoveAllIslandPane(Integer moveBackTime){
@@ -60,11 +58,11 @@ public final class Game implements Initializable {
     private void PlaceIslands(){
         //setting up the starting island and other elements
             try {
-                for(int i=0;i<10;i++){
+                for(int i=0;i<3;i++){
                     Island I=Island.islands.get(AllIslandNumbers.get(i)).clone();
                     I.IncreseY(230.0);
-                    I.IncreseX(Game.xCoordinates.get(i));
-                    I.placeOrcs(0);
+                    I.IncreseX(Game.xCoordinatesIsland.get(i));
+                    I.placeOrcs();
                     AllIslandPane.getChildren().add(I.getImageView());
                     AllIsland.add(I);
                 }
@@ -105,12 +103,11 @@ public final class Game implements Initializable {
                     return I;
                 }
             }
-//            System.out.println(I.getxPositionLeft()+"    "+I.getxPositionRight()+"   "+hero.getxPositionRight());
         }
         return null;
     }
 
-    private void Translate(Node node,Double x,Double y, Integer time, Integer way) {
+    public static void Translate(Node node,Double x,Double y, Integer time, Integer way) {
         TranslateTransition translate = new TranslateTransition();
         translate.setNode(node);
         translate.setDuration(Duration.millis(time));
@@ -120,115 +117,115 @@ public final class Game implements Initializable {
     }
 
     private void addAllIsland(){ // all y 230.0 for now
-        Game.xCoordinates.add(35.0);
+        Game.xCoordinatesIsland.add(35.0);
         Game.AllIslandNumbers.add(6);
-        Game.xCoordinates.add(400.0);
+        Game.xCoordinatesIsland.add(400.0);
         Game.AllIslandNumbers.add(3);
-        Game.xCoordinates.add(819.0);
+        Game.xCoordinatesIsland.add(819.0);
         Game.AllIslandNumbers.add(0);
-        Game.xCoordinates.add(1045.0);
+        Game.xCoordinatesIsland.add(1045.0);
         Game.AllIslandNumbers.add(4);
-        Game.xCoordinates.add(1188.0);
+        Game.xCoordinatesIsland.add(1188.0);
         Game.AllIslandNumbers.add(8);
-        Game.xCoordinates.add(1600.0);
+        Game.xCoordinatesIsland.add(1600.0);
         Game.AllIslandNumbers.add(2);
-        Game.xCoordinates.add(1795.0);
+        Game.xCoordinatesIsland.add(1795.0);
         Game.AllIslandNumbers.add(9);
-        Game.xCoordinates.add(2117.0);
+        Game.xCoordinatesIsland.add(2117.0);
         Game.AllIslandNumbers.add(4);
-        Game.xCoordinates.add(2210.0);
+        Game.xCoordinatesIsland.add(2210.0);
         Game.AllIslandNumbers.add(5);
-        Game.xCoordinates.add(2366.0);
+        Game.xCoordinatesIsland.add(2366.0);
         Game.AllIslandNumbers.add(1);
-        Game.xCoordinates.add(2750.0);
+        Game.xCoordinatesIsland.add(2750.0);
         Game.AllIslandNumbers.add(3);
-        Game.xCoordinates.add(3150.0);
+        Game.xCoordinatesIsland.add(3150.0);
         Game.AllIslandNumbers.add(7);
-        Game.xCoordinates.add(3360.0);
+        Game.xCoordinatesIsland.add(3360.0);
         Game.AllIslandNumbers.add(0);
-        Game.xCoordinates.add(3600.0);
+        Game.xCoordinatesIsland.add(3600.0);
         Game.AllIslandNumbers.add(3);
-        Game.xCoordinates.add(3950.0);
+        Game.xCoordinatesIsland.add(3950.0);
         Game.AllIslandNumbers.add(9);
-        Game.xCoordinates.add(4450.0);
+        Game.xCoordinatesIsland.add(4450.0);
         Game.AllIslandNumbers.add(7);
-        Game.xCoordinates.add(4675.0);
+        Game.xCoordinatesIsland.add(4675.0);
         Game.AllIslandNumbers.add(3);
-        Game.xCoordinates.add(5100.0);
+        Game.xCoordinatesIsland.add(5100.0);
         Game.AllIslandNumbers.add(1);
-        Game.xCoordinates.add(5363.0);
+        Game.xCoordinatesIsland.add(5363.0);
         Game.AllIslandNumbers.add(6);
-        Game.xCoordinates.add(5800.0);
+        Game.xCoordinatesIsland.add(5800.0);
         Game.AllIslandNumbers.add(5);
-        Game.xCoordinates.add(5945.0);
+        Game.xCoordinatesIsland.add(5945.0);
         Game.AllIslandNumbers.add(7);
-        Game.xCoordinates.add(6181.0);
+        Game.xCoordinatesIsland.add(6181.0);
         Game.AllIslandNumbers.add(0);
-        Game.xCoordinates.add(6490.0);
+        Game.xCoordinatesIsland.add(6490.0);
         Game.AllIslandNumbers.add(1);
-        Game.xCoordinates.add(6715.0);
+        Game.xCoordinatesIsland.add(6715.0);
         Game.AllIslandNumbers.add(8);
-        Game.xCoordinates.add(7100.0);
+        Game.xCoordinatesIsland.add(7100.0);
         Game.AllIslandNumbers.add(4);
-        Game.xCoordinates.add(7233.0);
+        Game.xCoordinatesIsland.add(7233.0);
         Game.AllIslandNumbers.add(7);
-        Game.xCoordinates.add(7429.0);
+        Game.xCoordinatesIsland.add(7429.0);
         Game.AllIslandNumbers.add(9);
-        Game.xCoordinates.add(7880.0);
+        Game.xCoordinatesIsland.add(7880.0);
         Game.AllIslandNumbers.add(5);
-        Game.xCoordinates.add(8000.0);
+        Game.xCoordinatesIsland.add(8000.0);
         Game.AllIslandNumbers.add(4);
-        Game.xCoordinates.add(8213.0);
+        Game.xCoordinatesIsland.add(8213.0);
         Game.AllIslandNumbers.add(0);
-        Game.xCoordinates.add(8469.0);
+        Game.xCoordinatesIsland.add(8469.0);
         Game.AllIslandNumbers.add(2);
-        Game.xCoordinates.add(8720.0);
+        Game.xCoordinatesIsland.add(8720.0);
         Game.AllIslandNumbers.add(8);
-        Game.xCoordinates.add(9000.0);
+        Game.xCoordinatesIsland.add(9000.0);
         Game.AllIslandNumbers.add(5);
-        Game.xCoordinates.add(9106.0);
+        Game.xCoordinatesIsland.add(9106.0);
         Game.AllIslandNumbers.add(8);
-        Game.xCoordinates.add(9467.0);
+        Game.xCoordinatesIsland.add(9467.0);
         Game.AllIslandNumbers.add(9);
-        Game.xCoordinates.add(9799.0);
+        Game.xCoordinatesIsland.add(9799.0);
         Game.AllIslandNumbers.add(1);
-        Game.xCoordinates.add(10077.0);
+        Game.xCoordinatesIsland.add(10077.0);
         Game.AllIslandNumbers.add(8);
-        Game.xCoordinates.add(10400.0);
+        Game.xCoordinatesIsland.add(10400.0);
         Game.AllIslandNumbers.add(6);
-        Game.xCoordinates.add(10819.0);
+        Game.xCoordinatesIsland.add(10819.0);
         Game.AllIslandNumbers.add(0);
-        Game.xCoordinates.add(11045.0);
+        Game.xCoordinatesIsland.add(11045.0);
         Game.AllIslandNumbers.add(4);
-        Game.xCoordinates.add(11188.0);
+        Game.xCoordinatesIsland.add(11188.0);
         Game.AllIslandNumbers.add(8);
-        Game.xCoordinates.add(11600.0);
+        Game.xCoordinatesIsland.add(11600.0);
         Game.AllIslandNumbers.add(2);
-        Game.xCoordinates.add(11795.0);
+        Game.xCoordinatesIsland.add(11795.0);
         Game.AllIslandNumbers.add(9);
-        Game.xCoordinates.add(12117.0);
+        Game.xCoordinatesIsland.add(12117.0);
         Game.AllIslandNumbers.add(4);
-        Game.xCoordinates.add(12210.0);
+        Game.xCoordinatesIsland.add(12210.0);
         Game.AllIslandNumbers.add(5);
-        Game.xCoordinates.add(12366.0);
+        Game.xCoordinatesIsland.add(12366.0);
         Game.AllIslandNumbers.add(1);
-        Game.xCoordinates.add(12750.0);
+        Game.xCoordinatesIsland.add(12750.0);
         Game.AllIslandNumbers.add(3);
-        Game.xCoordinates.add(13150.0);
+        Game.xCoordinatesIsland.add(13150.0);
         Game.AllIslandNumbers.add(7);
-        Game.xCoordinates.add(13360.0);
+        Game.xCoordinatesIsland.add(13360.0);
         Game.AllIslandNumbers.add(0);
-        Game.xCoordinates.add(13600.0);
+        Game.xCoordinatesIsland.add(13600.0);
         Game.AllIslandNumbers.add(3);
-        Game.xCoordinates.add(13950.0);
+        Game.xCoordinatesIsland.add(13950.0);
         Game.AllIslandNumbers.add(9);
-        Game.xCoordinates.add(14450.0);
+        Game.xCoordinatesIsland.add(14450.0);
         Game.AllIslandNumbers.add(7);
-        Game.xCoordinates.add(14675.0);
+        Game.xCoordinatesIsland.add(14675.0);
         Game.AllIslandNumbers.add(3);
-        Game.xCoordinates.add(15100.0);
+        Game.xCoordinatesIsland.add(15100.0);
         Game.AllIslandNumbers.add(1);
-        Game.xCoordinates.add(15363.0);
+        Game.xCoordinatesIsland.add(15363.0);
         Game.AllIslandNumbers.add(6);
     }
 

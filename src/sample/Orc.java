@@ -24,11 +24,11 @@ public abstract class Orc extends GameObject implements Cloneable{
         super(image, 0.0);
     }
 
-    protected void AddOrcToIsland(Island island) {
+    protected void AddOrcToIsland(Island island, Double offset) {
         try {
             Orc orc= this.clone();
             orc.myIsland = island;
-            orc.getImageView().setLayoutX(island.getxPositionLeft());
+            orc.getImageView().setLayoutX(island.getxPositionLeft()+offset);
             orc.IncreseY(island.getyPositionTop()-orc.getImageHeight());
             Orc.pane.getChildren().add(orc.getImageView());
             orc.HopOrc();
@@ -39,38 +39,39 @@ public abstract class Orc extends GameObject implements Cloneable{
 
     @Override
     public Orc clone() throws CloneNotSupportedException {
-        Orc clone=(Orc) super.clone();
-//        clone.getImageView().setLayoutX(clone.myIsland.getxPositionLeft());
-        return clone;
+        return (Orc) super.clone();
     }
 
-    public static void initialiseOrcs(AnchorPane AP){
+    public static void initialiseOrcs(AnchorPane AP) throws FileNotFoundException {
         Orc.pane=AP;
-        try{
-            for(int i = 1; i<=3; i++){
-                FileInputStream input = new FileInputStream(Orc.path+"orcs"+i+".png");
-                ImageView IV=new ImageView();
-                IV.setImage(new Image(input));
-                IV.setPreserveRatio(true);
-                IV.setFitWidth(IV.getBoundsInLocal().getWidth()*0.414556962);
-                Orc.GreenOrcs.add(new GreenOrc(IV));
-            }
+        for(int i = 1; i<=3; i++){
+            FileInputStream input = new FileInputStream(Orc.path+"orcs"+i+".png");
+            ImageView IV=new ImageView();
+            IV.setImage(new Image(input));
+            IV.setPreserveRatio(true);
+            IV.setFitWidth(IV.getBoundsInLocal().getWidth()*0.414556962);
+            Orc.GreenOrcs.add(new GreenOrc(IV));
+        }
             //set red orcs here once added
-        }
-        catch (FileNotFoundException e){
-            System.out.println("Error: Orcs Image Not found");
-        }
     }
 
     private Double LaunchSpeedY=350.0;
+    private Double LaunchSpeedX=350.0;
     private void HopOrc(){
         Timeline tl =new Timeline();
         tl.setCycleCount(Animation.INDEFINITE);
-        tl.getKeyFrames().add(new KeyFrame(Duration.millis(5), event->{
+        tl.getKeyFrames().add(new KeyFrame(Duration.millis(6), event->{
             if(this.OcsHitIsland()){
                 this.LaunchSpeedY =350.0;
             }
-            double p=((this.LaunchSpeedY)-190)/100;
+            if(this.OrcPushedByHero()){
+                this.LaunchSpeedX =350.0;
+                double p=(this.LaunchSpeedY)/50;
+                this.LaunchSpeedY -=1.0;
+                this.IncreseX(p);
+                this.myIsland=Game.updateCurrentIsland(this);
+            }
+            double p=((this.LaunchSpeedY)-150)/100;
             this.LaunchSpeedY -=1.5;
             super.IncreseY(-p);
         } ));
@@ -82,6 +83,18 @@ public abstract class Orc extends GameObject implements Cloneable{
             return false;
         return this.getyPositionBottom() > myIsland.getyPositionTop();
     }
+
+    private boolean OrcPushedByHero(){
+        return Game.hero.getyPositionBottom() > this.getyPositionTop() &&
+                Game.hero.getyPositionTop() < this.getyPositionBottom() &&
+                Game.hero.getxPositionRight() > this.getxPositionLeft() &&
+                Game.hero.getxPositionLeft() < this.getxPositionRight();
+    }
+
+    private boolean OrcAboveHero(){
+        return false;
+    }
+
 
 
 }
