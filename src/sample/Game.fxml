@@ -1,20 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane fx:id="ViewIslandPane" prefHeight="450.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Game">
    <children>
+      <Label fx:id="Position" layoutX="400.0" text="0" textAlignment="CENTER" textFill="#00adf1" textOverrun="CLIP">
+         <font>
+            <Font name="Segoe UI Black" size="36.0" />
+         </font>
+      </Label>
       <AnchorPane fx:id="AllIslandPane" onMouseClicked="#MoveHero" prefHeight="450.0" prefWidth="2200.0" />
-      <ImageView fx:id="SaveGameButton" fitHeight="40.0" fitWidth="40.0" layoutX="10.0" layoutY="-60.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitWidth="30.0" layoutX="760.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@assets/Coin.png" />
+         </image>
+      </ImageView>
+      <Label fx:id="Score" alignment="CENTER_RIGHT" contentDisplay="TOP" layoutX="716.0" layoutY="2.0" prefHeight="45.0" prefWidth="37.0" text="0" textAlignment="CENTER" textFill="#f2d222" textOverrun="CLIP">
+         <font>
+            <Font name="Segoe UI Black" size="30.0" />
+         </font>
+      </Label>
+      <ImageView fx:id="SaveGameButton" fitHeight="45.0" fitWidth="45.0" layoutX="5.0" layoutY="5.0" opacity="0.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@assets/SaveButton.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="CloseGameButton" fitHeight="40.0" fitWidth="40.0" layoutX="750.0" layoutY="-60.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="CloseGameButton" fitHeight="45.0" fitWidth="45.0" layoutX="5.0" layoutY="5.0" opacity="0.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@assets/BackButton.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="SettingIcon" fitHeight="40.0" fitWidth="49.0" layoutX="5.0" layoutY="-65.0" onMouseClicked="#OpenSetting" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@assets/SettingIcon.png" />
          </image>
       </ImageView>
    </children>

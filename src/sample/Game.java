@@ -1,8 +1,10 @@
 package sample;
+import javafx.animation.FadeTransition;
 import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -17,7 +19,7 @@ import java.util.ResourceBundle;
 
 
 public final class Game implements Initializable {
-    public static Hero hero;
+    public volatile static Hero hero;
     private static final ArrayList<Double> xCoordinatesIsland =new ArrayList<>();
     private static final ArrayList<Double> yCoordinatesIsland =new ArrayList<>();
     private static final ArrayList<Integer> AllIslandNumbers=new ArrayList<>();
@@ -31,6 +33,12 @@ public final class Game implements Initializable {
     private ImageView CloseGameButton;
     @FXML
     private ImageView SaveGameButton;
+    @FXML
+    private Label Score;
+    @FXML
+    private Label Position;
+    @FXML
+    private ImageView SettingIcon;
 
     @FXML
     void MoveHero(MouseEvent event) {
@@ -40,10 +48,24 @@ public final class Game implements Initializable {
         MoveAllIslandPane(400);
     }
 
+    private boolean settingOpened=false;
+    @FXML
+    void OpenSetting(MouseEvent event) {
+        int way;
+        if (!settingOpened)
+            way=1;
+        else
+            way=-1;
+        Translate(CloseGameButton,0.0,45.0,500,way);
+        Translate(SaveGameButton,0.0,90.0,500,way);
+        Fade(CloseGameButton,0.0,1.0,500,way);
+        Fade(SaveGameButton,0.0,1.0,500,way);
+        settingOpened=!settingOpened;
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        Translate(CloseGameButton,0.0,70.0,500,1);
-        Translate(SaveGameButton,0.0,70.0,500,1);
+        Translate(SettingIcon,0.0,70.0,500,1);
         Island.initialiseIslands(AllIslandPane);  // final
         addAllIsland(); //final
         PlaceIslands(); //final
@@ -51,7 +73,7 @@ public final class Game implements Initializable {
     }
 
     private void MoveAllIslandPane(Integer moveBackTime){
-        this.Translate(AllIslandPane,-125.0,0.0,moveBackTime,1);
+        Game.Translate(AllIslandPane,-125.0,0.0,moveBackTime,1);
     }
 
 
@@ -62,20 +84,25 @@ public final class Game implements Initializable {
                     Island I=Island.islands.get(AllIslandNumbers.get(i)).clone();
                     I.IncreseY(230.0);
                     I.IncreseX(Game.xCoordinatesIsland.get(i));
-                    I.placeOrcs();
+                    //Thread for individual island
+                    Thread tl=new Thread(I);
+                    tl.start();
                     AllIslandPane.getChildren().add(I.getImageView());
                     AllIsland.add(I);
                 }
             } catch (CloneNotSupportedException e) {
                 e.printStackTrace();
             }
+            Chest.CoinChests.get(0).AddChestToIsland(AllIsland.get(0),250.0); //temp
     }
 
     private void setupHero(){
         hero=new Hero(setupHeroImage(),this);
-        hero.setPane(AllIslandPane);
+        hero.setPane(AllIslandPane,Position);
         hero.getImageView().setLayoutX(200);
         hero.getImageView().setLayoutY(Island.islands.get(AllIslandNumbers.get(0)).getyPositionTop()-hero.getImageHeight());
+        hero.setCoinLabel(Score);
+        //Thread of Hero
         Thread t1=new Thread(hero);
         t1.start();
     }
@@ -114,6 +141,19 @@ public final class Game implements Initializable {
         translate.setByX(x*way);
         translate.setByY(y*way);
         translate.play();
+    }
+
+    private void Fade(Node IV, Double from, Double to, Integer time, Integer way){
+        FadeTransition fadeTransition=new FadeTransition(Duration.millis(time));
+        fadeTransition.setNode(IV);
+        if(way<0){
+            Double temp=to;
+            to=from;
+            from=temp;
+        }
+        fadeTransition.setFromValue(from);
+        fadeTransition.setToValue(to);
+        fadeTransition.play();
     }
 
     private void addAllIsland(){ // all y 230.0 for now
