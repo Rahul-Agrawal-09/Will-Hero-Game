@@ -67,6 +67,7 @@ public final class Game implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         Translate(SettingIcon,0.0,70.0,500,1);
         Island.initialiseIslands(AllIslandPane);  // final
+        Weapon.setWeaponPane(AllIslandPane);
         addAllIsland(); //final
         PlaceIslands(); //final
         setupHero();    //final
@@ -89,18 +90,20 @@ public final class Game implements Initializable {
                     tl.start();
                     AllIslandPane.getChildren().add(I.getImageView());
                     AllIsland.add(I);
+                    if(Chest.ChestOnIsland.get(i)!=null)
+                        Chest.ChestOnIsland.get(i).AddChestToIsland(I,Chest.ChestPositionOffset.get(i));
                 }
             } catch (CloneNotSupportedException e) {
                 e.printStackTrace();
             }
-            Chest.CoinChests.get(0).AddChestToIsland(AllIsland.get(0),250.0); //temp
+
     }
 
     private void setupHero(){
         hero=new Hero(setupHeroImage(),this);
         hero.setPane(AllIslandPane,Position);
         hero.getImageView().setLayoutX(200);
-        hero.getImageView().setLayoutY(Island.islands.get(AllIslandNumbers.get(0)).getyPositionTop()-hero.getImageHeight());
+        hero.getImageView().setLayoutY(200);//Island.islands.get(AllIslandNumbers.get(0)).getyPositionTop()-hero.getImageHeight());
         hero.setCoinLabel(Score);
         //Thread of Hero
         Thread t1=new Thread(hero);
@@ -143,7 +146,7 @@ public final class Game implements Initializable {
         translate.play();
     }
 
-    private void Fade(Node IV, Double from, Double to, Integer time, Integer way){
+    public static void Fade(Node IV, Double from, Double to, Integer time, Integer way){
         FadeTransition fadeTransition=new FadeTransition(Duration.millis(time));
         fadeTransition.setNode(IV);
         if(way<0){
@@ -156,6 +159,7 @@ public final class Game implements Initializable {
         fadeTransition.play();
     }
 
+    //Define all Islands of the Game
     private void addAllIsland(){ // all y 230.0 for now
         Game.xCoordinatesIsland.add(35.0);
         Game.AllIslandNumbers.add(6);

@@ -12,6 +12,7 @@ public final class Hero extends GameObject implements Runnable{
     private final Game game;
     private Island currentIsland;
     private Timeline HopTimeline;
+    private Helmet MyHelmet;
     private Integer Position=0;
     private Integer Coins=0;
     private Label CoinLabel;
@@ -27,15 +28,12 @@ public final class Hero extends GameObject implements Runnable{
         this.LaunchSpeedY=350.0;
         this.LaunchSpeedX=350.0;
         this.DoMove=false;
+        this.MyHelmet=new Helmet();
     }
 
     public void increaseCoins(Integer I){
         this.Coins+=I;
         this.CoinLabel.setText(this.Coins+"");
-    }
-
-    public void increasePosition(){
-
     }
 
     public void setPane(AnchorPane AP, Label position){
@@ -92,6 +90,7 @@ public final class Hero extends GameObject implements Runnable{
     public void move(){
         this.DoMove=true;
         this.Position++;
+        this.MyHelmet.useSword();
     }
 
     public void hop(){

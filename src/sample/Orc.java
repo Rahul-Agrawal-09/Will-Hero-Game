@@ -15,8 +15,10 @@ import java.util.ArrayList;
 public abstract class Orc extends GameObject implements Cloneable{
     //static variables-> define Orcs
     private static final String path=System.getProperty("user.dir")+"\\src\\sample\\assets\\";
-    public static ArrayList<GreenOrc> GreenOrcs= new ArrayList<>();
-    public static ArrayList<RedOrc> RedOrcs= new ArrayList<>();
+    public static final ArrayList<ArrayList<Orc>> OrcOnIsland=new ArrayList<>();
+    public static final ArrayList<ArrayList<Double>> OrcPositionOffset=new ArrayList<>();
+    private static final ArrayList<GreenOrc> GreenOrcs= new ArrayList<>();
+    private static final ArrayList<RedOrc> RedOrcs= new ArrayList<>();
     private static AnchorPane pane;
 
     //Instance variable->Specific to each object
@@ -115,6 +117,85 @@ public abstract class Orc extends GameObject implements Cloneable{
     }
 
 
+    //Define all orcs of the Game
+    public static void addAllOrc(){
+        ArrayList<Orc> orcs;
+        ArrayList<Double> offset;
 
+        //for Island 0
+        orcs=new ArrayList<>();
+        offset=new ArrayList<>();
+
+        OrcOnIsland.add(orcs);
+        OrcPositionOffset.add(offset);
+
+        //for Island 1
+        orcs=new ArrayList<>();
+        offset=new ArrayList<>();
+
+        OrcOnIsland.add(orcs);
+        OrcPositionOffset.add(offset);
+
+        //for Island 2
+        orcs=new ArrayList<>();
+        offset=new ArrayList<>();
+
+        OrcOnIsland.add(orcs);
+        OrcPositionOffset.add(offset);
+
+        //for Island 3
+        orcs=new ArrayList<>();
+        offset=new ArrayList<>();
+        orcs.add(Orc.GreenOrcs.get(0));
+        offset.add(20.0);
+        OrcOnIsland.add(orcs);
+        OrcPositionOffset.add(offset);
+
+        //for Island 4
+        orcs=new ArrayList<>();
+        offset=new ArrayList<>();
+
+        OrcOnIsland.add(orcs);
+        OrcPositionOffset.add(offset);
+
+        //for Island 5
+        orcs=new ArrayList<>();
+        offset=new ArrayList<>();
+
+        OrcOnIsland.add(orcs);
+        OrcPositionOffset.add(offset);
+
+        //for Island 6
+        orcs=new ArrayList<>();
+        offset=new ArrayList<>();
+//        orcs.add(Orc.GreenOrcs.get(0));
+//        offset.add(150.0);
+        orcs.add(Orc.GreenOrcs.get(1));
+        offset.add(200.0);
+        OrcOnIsland.add(orcs);
+        OrcPositionOffset.add(offset);
+
+        //for Island 7
+        orcs=new ArrayList<>();
+        offset=new ArrayList<>();
+
+        OrcOnIsland.add(orcs);
+        OrcPositionOffset.add(offset);
+
+        //for Island 8
+        orcs=new ArrayList<>();
+        offset=new ArrayList<>();
+
+        OrcOnIsland.add(orcs);
+        OrcPositionOffset.add(offset);
+
+        //for Island 9
+        orcs=new ArrayList<>();
+        offset=new ArrayList<>();
+
+        OrcOnIsland.add(orcs);
+        OrcPositionOffset.add(offset);
+
+    }
 
 }

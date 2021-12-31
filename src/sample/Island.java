@@ -14,8 +14,6 @@ public final class Island extends GameObject implements Runnable{
     private static final String path=System.getProperty("user.dir")+"\\src\\sample\\assets\\";
     private static final HashMap<Integer,String> Name=new HashMap<>();
     private static final ArrayList<Double> IslandOffset =new ArrayList<>();
-    private static final ArrayList<ArrayList<Orc>> OrcOnIsland=new ArrayList<>();
-    private static final ArrayList<ArrayList<Double>> OrcPositionOffset=new ArrayList<>();
     private static AnchorPane AllIslandPane;
     public static ArrayList<Island> islands= new ArrayList<>();
 
@@ -55,7 +53,7 @@ public final class Island extends GameObject implements Runnable{
     }
 
     private static void setIslands() throws FileNotFoundException {
-        Island.addAllOrc();
+        Orc.addAllOrc();
         for(int i = 0; i<Island.Name.size(); i++){
             FileInputStream input = new FileInputStream(Island.path+Island.Name.get(i));
             ImageView IV=new ImageView();
@@ -63,8 +61,8 @@ public final class Island extends GameObject implements Runnable{
             IV.setPreserveRatio(true);
             IV.setFitWidth(IV.getBoundsInLocal().getWidth()*0.414556962);
             Island NewIsland=new Island(IV,Island.IslandOffset.get(i));
-            NewIsland.MyOrcs=Island.OrcOnIsland.get(i);
-            NewIsland.MyOrcsOffset=Island.OrcPositionOffset.get(i);
+            NewIsland.MyOrcs=Orc.OrcOnIsland.get(i);
+            NewIsland.MyOrcsOffset=Orc.OrcPositionOffset.get(i);
             Island.islands.add(NewIsland);
         }
     }
@@ -84,83 +82,5 @@ public final class Island extends GameObject implements Runnable{
         return null;
     }
 
-    private static void addAllOrc(){
-        ArrayList<Orc> orcs;
-        ArrayList<Double> offset;
 
-        //for Island 0
-        orcs=new ArrayList<>();
-        offset=new ArrayList<>();
-
-        OrcOnIsland.add(orcs);
-        OrcPositionOffset.add(offset);
-
-        //for Island 1
-        orcs=new ArrayList<>();
-        offset=new ArrayList<>();
-
-        OrcOnIsland.add(orcs);
-        OrcPositionOffset.add(offset);
-
-        //for Island 2
-        orcs=new ArrayList<>();
-        offset=new ArrayList<>();
-
-        OrcOnIsland.add(orcs);
-        OrcPositionOffset.add(offset);
-
-        //for Island 3
-        orcs=new ArrayList<>();
-        offset=new ArrayList<>();
-        orcs.add(Orc.GreenOrcs.get(0));
-        offset.add(20.0);
-        OrcOnIsland.add(orcs);
-        OrcPositionOffset.add(offset);
-
-        //for Island 4
-        orcs=new ArrayList<>();
-        offset=new ArrayList<>();
-
-        OrcOnIsland.add(orcs);
-        OrcPositionOffset.add(offset);
-
-        //for Island 5
-        orcs=new ArrayList<>();
-        offset=new ArrayList<>();
-
-        OrcOnIsland.add(orcs);
-        OrcPositionOffset.add(offset);
-
-        //for Island 6
-        orcs=new ArrayList<>();
-        offset=new ArrayList<>();
-//        orcs.add(Orc.GreenOrcs.get(0));
-//        offset.add(150.0);
-        orcs.add(Orc.GreenOrcs.get(1));
-        offset.add(200.0);
-        OrcOnIsland.add(orcs);
-        OrcPositionOffset.add(offset);
-
-        //for Island 7
-        orcs=new ArrayList<>();
-        offset=new ArrayList<>();
-
-        OrcOnIsland.add(orcs);
-        OrcPositionOffset.add(offset);
-
-        //for Island 8
-        orcs=new ArrayList<>();
-        offset=new ArrayList<>();
-
-        OrcOnIsland.add(orcs);
-        OrcPositionOffset.add(offset);
-
-        //for Island 9
-        orcs=new ArrayList<>();
-        offset=new ArrayList<>();
-
-        OrcOnIsland.add(orcs);
-        OrcPositionOffset.add(offset);
-
-    }
 }

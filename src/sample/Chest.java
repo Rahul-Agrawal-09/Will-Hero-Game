@@ -11,11 +11,14 @@ import javafx.util.Duration;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public abstract class Chest extends GameObject implements Cloneable {
     private static final String path=System.getProperty("user.dir")+"\\src\\sample\\assets\\";
     protected static ArrayList<CoinChest> CoinChests=new ArrayList<>();
     protected static ArrayList<WeaponChest> WeaponChests=new ArrayList<>();
+    public static HashMap<Integer,Chest> ChestOnIsland =new HashMap<>();
+    public static HashMap<Integer,Integer> ChestPositionOffset =new HashMap<>();
     private static AnchorPane pane;
     private Island myIsland;
     private boolean isOpened;
@@ -31,7 +34,7 @@ public abstract class Chest extends GameObject implements Cloneable {
     }
 
     //Place Chest on an Island
-    protected void AddChestToIsland(Island island, Double offset) {
+    protected void AddChestToIsland(Island island, Integer offset) {
         try {
             Chest chest= this.clone();
             chest.myIsland = island;
@@ -59,6 +62,8 @@ public abstract class Chest extends GameObject implements Cloneable {
             else
                 Chest.WeaponChests.add(new WeaponChest(IV));
         }
+        Chest.addAllOrc();
+//        Chest.CoinChests.get(0).AddChestToIsland(AllIsland.get(0),250.0); //temp
     }
 
     public void HeroHitTimeline(){
@@ -83,4 +88,10 @@ public abstract class Chest extends GameObject implements Cloneable {
     //Abstract Method
     public abstract void OpenChest(Hero hero);
 
+
+    //Define all Chest of the Game
+    public static void addAllOrc(){
+        ChestOnIsland.put(1,WeaponChests.get(0));
+        ChestPositionOffset.put(1,100);
+    }
 }
