@@ -8,9 +8,9 @@ public final class WeaponChest  extends Chest{
     public WeaponChest(ImageView image) {
         super(image);
 //        if(Math.random()<0.5)
-//            this.weapon=Helmet.sword;
+            this.weapon=Helmet.sword;
 //        else
-            this.weapon=Helmet.spear;
+//            this.weapon=Helmet.spear;
     }
 
     @Override

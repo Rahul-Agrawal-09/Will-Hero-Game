@@ -1,6 +1,5 @@
 package sample;
-import javafx.animation.FadeTransition;
-import javafx.animation.TranslateTransition;
+import javafx.animation.*;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -20,6 +19,7 @@ import java.util.ResourceBundle;
 
 public final class Game implements Initializable {
     public volatile static Hero hero;
+    public Thread[] threads=new Thread[7];
     private static final ArrayList<Double> xCoordinatesIsland =new ArrayList<>();
     private static final ArrayList<Double> yCoordinatesIsland =new ArrayList<>();
     private static final ArrayList<Integer> AllIslandNumbers=new ArrayList<>();
@@ -67,7 +67,6 @@ public final class Game implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         Translate(SettingIcon,0.0,70.0,500,1);
         Island.initialiseIslands(AllIslandPane);  // final
-        Weapon.setWeaponPane(AllIslandPane);
         addAllIsland(); //final
         PlaceIslands(); //final
         setupHero();    //final
@@ -78,25 +77,41 @@ public final class Game implements Initializable {
     }
 
 
+    private Integer NITP;
     private void PlaceIslands(){
         //setting up the starting island and other elements
             try {
-                for(int i=0;i<3;i++){
-                    Island I=Island.islands.get(AllIslandNumbers.get(i)).clone();
-                    I.IncreseY(230.0);
-                    I.IncreseX(Game.xCoordinatesIsland.get(i));
-                    //Thread for individual island
-                    Thread tl=new Thread(I);
-                    tl.start();
-                    AllIslandPane.getChildren().add(I.getImageView());
-                    AllIsland.add(I);
-                    if(Chest.ChestOnIsland.get(i)!=null)
-                        Chest.ChestOnIsland.get(i).AddChestToIsland(I,Chest.ChestPositionOffset.get(i));
-                }
+                for(NITP =0; NITP <5; NITP++)
+                    PlaceIslandsHelper(NITP);
             } catch (CloneNotSupportedException e) {
                 e.printStackTrace();
             }
+        Timeline tl=new Timeline();
+        tl.setCycleCount(Animation.INDEFINITE);
+        tl.getKeyFrames().add(new KeyFrame(Duration.millis(10), event->{
+            if((AllIsland.get(0).getxPositionRight()-hero.getxPositionLeft())<-150){
+                try {
+                    AllIsland.remove(0);
+                    PlaceIslandsHelper(NITP);
+                    NITP++;
+                } catch (CloneNotSupportedException e) {
+                    e.printStackTrace();
+                }
+            }
+        } ));
+        tl.play();
+    }
 
+    private void PlaceIslandsHelper(Integer i) throws CloneNotSupportedException {
+        System.out.println(i+"");
+        Island I=Island.islands.get(AllIslandNumbers.get(i)).clone();
+        I.IncreseY(230.0);
+        I.IncreseX(Game.xCoordinatesIsland.get(i));
+        I.InitialiseIsland();
+        AllIslandPane.getChildren().add(I.getImageView());
+        AllIsland.add(I);
+        if(Chest.ChestOnIsland.get(i)!=null)
+            Chest.ChestOnIsland.get(i).AddChestToIsland(I,Chest.ChestPositionOffset.get(i));
     }
 
     private void setupHero(){
@@ -105,7 +120,6 @@ public final class Game implements Initializable {
         hero.getImageView().setLayoutX(200);
         hero.getImageView().setLayoutY(200);//Island.islands.get(AllIslandNumbers.get(0)).getyPositionTop()-hero.getImageHeight());
         hero.setCoinLabel(Score);
-        //Thread of Hero
         Thread t1=new Thread(hero);
         t1.start();
     }
@@ -157,6 +171,10 @@ public final class Game implements Initializable {
         fadeTransition.setFromValue(from);
         fadeTransition.setToValue(to);
         fadeTransition.play();
+    }
+
+    public void AddChildren(GameObject GO){
+        AllIslandPane.getChildren().add(GO.getImageView());
     }
 
     //Define all Islands of the Game

@@ -90,7 +90,7 @@ public final class Hero extends GameObject implements Runnable{
     public void move(){
         this.DoMove=true;
         this.Position++;
-        this.MyHelmet.useSword();
+        this.MyHelmet.useWeapon();
     }
 
     public void hop(){
@@ -112,6 +112,10 @@ public final class Hero extends GameObject implements Runnable{
         if(currentIsland==null)
             return false;
         return this.getyPositionBottom() > currentIsland.getyPositionTop();
+    }
+
+    public Helmet getMyHelmet(){
+        return this.MyHelmet;
     }
 
 }

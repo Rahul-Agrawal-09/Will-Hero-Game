@@ -95,6 +95,8 @@ public abstract class Orc extends GameObject implements Cloneable{
                 pushed=false;
                 this.LaunchSpeedX=350.0;
             }
+            if(this.OrcHitByWeapon())
+                this.eliminateOrc();
         } ));
         tl2.play();
     }
@@ -112,10 +114,24 @@ public abstract class Orc extends GameObject implements Cloneable{
                 Game.hero.getxPositionLeft() < this.getxPositionRight();
     }
 
+    public void eliminateOrc(){
+        Orc.pane.getChildren().remove(this.getImageView());
+        myIsland=null;
+    }
+
     private boolean OrcAboveHero(){
         return false;
     }
 
+    private boolean OrcHitByWeapon(){
+        Weapon weapon=Game.hero.getMyHelmet().getCurrentWeapon();
+        if(weapon==null)
+            return false;
+        return weapon.getxPositionLeft() < this.getxPositionRight() &&
+                weapon.getxPositionRight() > this.getxPositionLeft() &&
+                weapon.getyPositionBottom() > this.getyPositionTop() &&
+                weapon.getyPositionTop() < this.getyPositionBottom();
+    }
 
     //Define all orcs of the Game
     public static void addAllOrc(){

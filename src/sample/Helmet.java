@@ -15,6 +15,7 @@ public class Helmet implements Initializable {
     private static final String path=System.getProperty("user.dir")+"\\src\\sample\\assets\\";
     public static Sword sword;
     public static Spear spear;
+    public Weapon CurrentWeapon;
 
     @FXML
     private ImageView SpearIcon;
@@ -29,6 +30,7 @@ public class Helmet implements Initializable {
     private Label SwordLabel;
 
     public Helmet(){
+        this.CurrentWeapon=null;
     }
 
     @Override
@@ -55,8 +57,14 @@ public class Helmet implements Initializable {
         Sword.setAttributes(SwordIcon,SwordLabel);
     }
 
-    public void useSword(){
-        if(Helmet.spear.IsWeaponActive)
-            Helmet.spear.Useweapon();
+    public void useWeapon(){
+        this.CurrentWeapon=Helmet.sword;
+        if(CurrentWeapon.IsWeaponActive)
+            CurrentWeapon.Useweapon();
     }
+
+    public Weapon getCurrentWeapon(){
+        return this.CurrentWeapon;
+    }
+
 }

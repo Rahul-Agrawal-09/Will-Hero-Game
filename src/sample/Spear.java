@@ -33,7 +33,8 @@ public final class Spear extends Weapon{
         SetupTimeline();
     }
 
-    private Double FireLength=200.0;
+    //How far the Spade will move
+    private Double FireLength=500.0;
     @Override
     public void SetupTimeline() {
         Timeline tl=new Timeline();
@@ -43,7 +44,7 @@ public final class Spear extends Weapon{
                 super.IncreseX(5.0);
                 FireLength-=5.0;
                 if(FireLength<0){
-                    FireLength=200.0;
+                    FireLength=500.0;
                     fire=false;
                 }
             }

@@ -91,7 +91,7 @@ public abstract class Chest extends GameObject implements Cloneable {
 
     //Define all Chest of the Game
     public static void addAllOrc(){
-        ChestOnIsland.put(1,WeaponChests.get(0));
-        ChestPositionOffset.put(1,100);
+        ChestOnIsland.put(0,WeaponChests.get(0));
+        ChestPositionOffset.put(0,250);
     }
 }

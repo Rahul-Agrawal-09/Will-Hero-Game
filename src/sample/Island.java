@@ -9,7 +9,7 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public final class Island extends GameObject implements Runnable{
+public final class Island extends GameObject {
     //static variables-> define game
     private static final String path=System.getProperty("user.dir")+"\\src\\sample\\assets\\";
     private static final HashMap<Integer,String> Name=new HashMap<>();
@@ -45,6 +45,7 @@ public final class Island extends GameObject implements Runnable{
         try {
             Orc.initialiseOrcs(AllIslandPane); //final
             Chest.initialiseChests(AllIslandPane); //final
+            Weapon.setWeaponPane(AllIslandPane);
             Island.setIslands();
         }
         catch (FileNotFoundException e) {
@@ -67,11 +68,15 @@ public final class Island extends GameObject implements Runnable{
         }
     }
 
-    @Override
-    public void run(){
+
+    public void InitialiseIsland(){
         for(int i=0;i<this.MyOrcs.size();i++){
             this.MyOrcs.get(i).AddOrcToIsland(this,this.MyOrcsOffset.get(i));
         }
+    }
+
+    public ArrayList<Orc> getMyOrcs(){
+        return this.MyOrcs;
     }
 
     public static Island getIsland(ImageView IV){
