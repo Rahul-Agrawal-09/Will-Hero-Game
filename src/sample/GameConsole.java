@@ -10,7 +10,10 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -47,8 +50,19 @@ public class GameConsole implements Initializable {
     }
 
     @FXML
-    void LoadGame(MouseEvent event) {
-
+    void LoadGame(MouseEvent event) throws IOException {
+        ObjectInputStream in = null;
+        try {
+            in = new ObjectInputStream (new FileInputStream("out.txt"));
+            SaveObject SO = (SaveObject) in.readObject();
+            System.out.println(SO.HeroLayoutX+" "+ SO.HeroCoins+" "+SO.CurrentWeapon+" "+SO.HeroPosition);
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+            System.out.println("Error: Loading The Game");
+        }
+        finally {
+            in.close();
+        }
     }
 
     @FXML
@@ -56,7 +70,7 @@ public class GameConsole implements Initializable {
         Fade(LoadingPane.getChildren().get(0),0.0,1.0,1000);
         Fade(LoadingPane.getChildren().get(1),0.0,1.0,1000); // circle
         setBackgroundelements(1000,-1);
-//        sleep(5000);          //problem check sleep
+//        sleep(2000);          //problem check sleep
         LoadNewGamePane();      //comment this to see loading page
     }
 
@@ -158,9 +172,19 @@ public class GameConsole implements Initializable {
         }
     }
 
+
+    private Integer duration;
     private void sleep(Integer duration){
+        this.duration=duration;
         Timeline tl=new Timeline();
-        tl.getKeyFrames().add(new KeyFrame(Duration.millis(duration), event->{;}));
+        tl.setCycleCount(Animation.INDEFINITE);
+        tl.getKeyFrames().add(new KeyFrame(Duration.millis(5), event->{
+            this.duration-=5;
+            if(this.duration<0) {
+//                LoadNewGamePane();
+                tl.stop();
+            }
+        }));
         tl.play();
     }
 

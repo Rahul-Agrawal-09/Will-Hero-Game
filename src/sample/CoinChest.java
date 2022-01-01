@@ -15,7 +15,7 @@ public final class CoinChest extends Chest{
     @Override
     public void OpenChest(Hero hero) {
         hero.increaseCoins(this.CoinNum);
-        this.getImageView().setImage(Chest.CoinChests.get(1).getImageView().getImage());
+        this.getImageView().setImage(Chest.CoinChests.get(1).getImage());
         this.getImageView().setFitWidth(this.getImageWidth()*1.1);
     }
 }

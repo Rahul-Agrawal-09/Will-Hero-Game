@@ -9,7 +9,6 @@ public abstract class Weapon extends GameObject {
     protected static AnchorPane pane;
     protected Integer level=0;
 
-
     public Weapon(ImageView image) {
         super(image, 0.0);
     }
@@ -18,11 +17,15 @@ public abstract class Weapon extends GameObject {
     public void ActivateWeapon(){
         this.IsWeaponActive=true;
         this.level++;
-        ShowIcon();
+//        ShowIcon();
     }
 
     public static void setWeaponPane(AnchorPane AP){
         Weapon.pane=AP;
+    }
+
+    public void removeWeapon(){
+        pane.getChildren().remove(this.getImageView());
     }
 
     public abstract void Useweapon();

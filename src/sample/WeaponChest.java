@@ -7,16 +7,17 @@ public final class WeaponChest  extends Chest{
 
     public WeaponChest(ImageView image) {
         super(image);
-//        if(Math.random()<0.5)
-            this.weapon=Helmet.sword;
-//        else
-//            this.weapon=Helmet.spear;
+        if(Math.random()<0.5)
+            this.weapon = Helmet.sword;
+        else
+            this.weapon = Helmet.spear;
     }
 
     @Override
     public void OpenChest(Hero hero) {
-        weapon.ActivateWeapon();
-        this.getImageView().setImage(Chest.WeaponChests.get(1).getImageView().getImage());
+        System.out.println(weapon);
+        hero.getMyHelmet().setCurrentWeapon(weapon);
+        this.getImageView().setImage(Chest.WeaponChests.get(1).getImage());
         this.getImageView().setFitWidth(this.getImageWidth()*1.1);
     }
 }

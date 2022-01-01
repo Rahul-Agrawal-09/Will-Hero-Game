@@ -2,7 +2,9 @@ package sample;
 
 import javafx.scene.image.ImageView;
 
-public abstract class GameObject implements Cloneable {
+import java.io.Serializable;
+
+public abstract class GameObject implements Cloneable, Serializable {
     private ImageView Element;
     private final Double ImageHeight;
     private final Double ImageWidth;

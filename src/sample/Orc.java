@@ -20,6 +20,8 @@ public abstract class Orc extends GameObject implements Cloneable{
     private static final ArrayList<GreenOrc> GreenOrcs= new ArrayList<>();
     private static final ArrayList<RedOrc> RedOrcs= new ArrayList<>();
     private static AnchorPane pane;
+    private Timeline pushOrcTimeline;
+    private Timeline hopOrcTimeline;
 
     //Instance variable->Specific to each object
     private Island myIsland;
@@ -62,9 +64,13 @@ public abstract class Orc extends GameObject implements Cloneable{
 
     private Double LaunchSpeedY=350.0;
     private void HopOrc(){
-        Timeline tl =new Timeline();
-        tl.setCycleCount(Animation.INDEFINITE);
-        tl.getKeyFrames().add(new KeyFrame(Duration.millis(6), event->{
+        hopOrcTimeline =new Timeline();
+        hopOrcTimeline.setCycleCount(Animation.INDEFINITE);
+        hopOrcTimeline.getKeyFrames().add(new KeyFrame(Duration.millis(6), event->{
+            if(OrcEliminatesHero()) {
+                Game.hero.EleminateHero();
+                pushOrcTimeline.stop();
+            }
             if(this.OcsHitIsland()){
                 this.LaunchSpeedY =350.0;
             }
@@ -74,19 +80,19 @@ public abstract class Orc extends GameObject implements Cloneable{
             this.LaunchSpeedY -=1.5;
             super.IncreseY(-p);
         } ));
-        tl.play();
+        hopOrcTimeline.play();
         PushOrcTimeline();
     }
 
     private boolean pushed=false;
     private Double LaunchSpeedX=350.0;
     private void PushOrcTimeline(){
-        Timeline tl2 =new Timeline();
-        tl2.setCycleCount(Animation.INDEFINITE);
-        tl2.getKeyFrames().add(new KeyFrame(Duration.millis(6), event->{
-            if(pushed){
-                double p=((this.LaunchSpeedX))/120;
-                this.LaunchSpeedX -=3.0;
+        pushOrcTimeline =new Timeline();
+        pushOrcTimeline.setCycleCount(Animation.INDEFINITE);
+        pushOrcTimeline.getKeyFrames().add(new KeyFrame(Duration.millis(4), event->{
+            if( pushed){
+                double p = ((this.LaunchSpeedX)) / 120;
+                this.LaunchSpeedX -= 3.0;
                 this.IncreseX(p);
             }
             if(this.LaunchSpeedX<0){
@@ -98,7 +104,7 @@ public abstract class Orc extends GameObject implements Cloneable{
             if(this.OrcHitByWeapon())
                 this.eliminateOrc();
         } ));
-        tl2.play();
+        pushOrcTimeline.play();
     }
 
     private boolean OcsHitIsland(){
@@ -119,8 +125,11 @@ public abstract class Orc extends GameObject implements Cloneable{
         myIsland=null;
     }
 
-    private boolean OrcAboveHero(){
-        return false;
+    private boolean OrcEliminatesHero(){
+        return Game.hero.getxPositionRight() > this.getxPositionLeft() &&
+                Game.hero.getxPositionLeft() < this.getxPositionRight() &&
+                this.getyPositionBottom()-Game.hero.getyPositionTop()<2 &&
+                this.getyPositionBottom()-Game.hero.getyPositionTop()>0;
     }
 
     private boolean OrcHitByWeapon(){
@@ -163,7 +172,7 @@ public abstract class Orc extends GameObject implements Cloneable{
         orcs=new ArrayList<>();
         offset=new ArrayList<>();
         orcs.add(Orc.GreenOrcs.get(0));
-        offset.add(20.0);
+        offset.add(40.0);
         OrcOnIsland.add(orcs);
         OrcPositionOffset.add(offset);
 

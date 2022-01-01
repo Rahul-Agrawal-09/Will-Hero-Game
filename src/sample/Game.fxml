@@ -24,12 +24,12 @@
             <Font name="Segoe UI Black" size="30.0" />
          </font>
       </Label>
-      <ImageView fx:id="SaveGameButton" fitHeight="45.0" fitWidth="45.0" layoutX="5.0" layoutY="5.0" opacity="0.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="SaveGameButton" fitHeight="45.0" fitWidth="45.0" layoutX="5.0" layoutY="5.0" onMouseClicked="#SaveGame" opacity="0.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@assets/SaveButton.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="CloseGameButton" fitHeight="45.0" fitWidth="45.0" layoutX="5.0" layoutY="5.0" opacity="0.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="CloseGameButton" fitHeight="45.0" fitWidth="45.0" layoutX="5.0" layoutY="5.0" onMouseClicked="#CloseGame" opacity="0.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@assets/BackButton.png" />
          </image>

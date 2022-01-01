@@ -12,7 +12,8 @@ public final class Hero extends GameObject implements Runnable{
     private final Game game;
     private Island currentIsland;
     private Timeline HopTimeline;
-    private Helmet MyHelmet;
+    private Timeline MoveTimeline;
+    private final Helmet MyHelmet;
     private Integer Position=0;
     private Integer Coins=0;
     private Label CoinLabel;
@@ -57,15 +58,15 @@ public final class Hero extends GameObject implements Runnable{
     @Override
     public void run() {
         this.hop();
-        this.MoveTimeline();
+        this.moveTimeline();
     }
 
     //To move if mouse clicked
-    public void MoveTimeline(){
-        Timeline tl=new Timeline();
+    public void moveTimeline(){
+        MoveTimeline=new Timeline();
         final Double[] total = {0.0};
-        tl.setCycleCount(Animation.INDEFINITE);
-        tl.getKeyFrames().add(new KeyFrame(Duration.millis(3),event->{
+        MoveTimeline.setCycleCount(Animation.INDEFINITE);
+        MoveTimeline.getKeyFrames().add(new KeyFrame(Duration.millis(3),event->{
             if(DoMove){
 //                this.LaunchSpeedX =300.0;
 //                double p=((this.LaunchSpeedX))/80;
@@ -84,7 +85,7 @@ public final class Hero extends GameObject implements Runnable{
                 }
             }
         }));
-        tl.play();
+        MoveTimeline.play();
     }
 
     public void move(){
@@ -118,4 +119,16 @@ public final class Hero extends GameObject implements Runnable{
         return this.MyHelmet;
     }
 
+    public void EleminateHero(){
+        HopTimeline.stop();
+        MoveTimeline.stop();
+        Game.Fade(this.getImageView(),1.0,0.5,20,1);
+        Game.Translate(this.getImageView(),0.0,300.0,1000,1);
+    }
+
+    public void SaveAttributes(SaveObject SO){
+        SO.HeroPosition=this.Position;
+        SO.HeroCoins=this.Coins;
+        this.getMyHelmet().SaveAttributes(SO);
+    }
 }

@@ -15,8 +15,8 @@ import java.util.HashMap;
 
 public abstract class Chest extends GameObject implements Cloneable {
     private static final String path=System.getProperty("user.dir")+"\\src\\sample\\assets\\";
-    protected static ArrayList<CoinChest> CoinChests=new ArrayList<>();
-    protected static ArrayList<WeaponChest> WeaponChests=new ArrayList<>();
+    protected static ArrayList<ImageView> CoinChests=new ArrayList<>();
+    protected static ArrayList<ImageView> WeaponChests=new ArrayList<>();
     public static HashMap<Integer,Chest> ChestOnIsland =new HashMap<>();
     public static HashMap<Integer,Integer> ChestPositionOffset =new HashMap<>();
     private static AnchorPane pane;
@@ -58,11 +58,11 @@ public abstract class Chest extends GameObject implements Cloneable {
             IV.setPreserveRatio(true);
             IV.setFitWidth(IV.getBoundsInLocal().getWidth()*0.37);
             if(i<=2)
-                Chest.CoinChests.add(new CoinChest(IV));
+                Chest.CoinChests.add(IV);
             else
-                Chest.WeaponChests.add(new WeaponChest(IV));
+                Chest.WeaponChests.add(IV);
         }
-        Chest.addAllOrc();
+        Chest.addAllChest();
 //        Chest.CoinChests.get(0).AddChestToIsland(AllIsland.get(0),250.0); //temp
     }
 
@@ -90,8 +90,10 @@ public abstract class Chest extends GameObject implements Cloneable {
 
 
     //Define all Chest of the Game
-    public static void addAllOrc(){
-        ChestOnIsland.put(0,WeaponChests.get(0));
+    public static void addAllChest(){
+        ChestOnIsland.put(1,new WeaponChest(WeaponChests.get(0)));
+        ChestPositionOffset.put(1,250);
+        ChestOnIsland.put(0,new WeaponChest(WeaponChests.get(0)));
         ChestPositionOffset.put(0,250);
     }
 }

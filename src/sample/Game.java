@@ -10,8 +10,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import java.io.*;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -19,7 +18,6 @@ import java.util.ResourceBundle;
 
 public final class Game implements Initializable {
     public volatile static Hero hero;
-    public Thread[] threads=new Thread[7];
     private static final ArrayList<Double> xCoordinatesIsland =new ArrayList<>();
     private static final ArrayList<Double> yCoordinatesIsland =new ArrayList<>();
     private static final ArrayList<Integer> AllIslandNumbers=new ArrayList<>();
@@ -39,6 +37,28 @@ public final class Game implements Initializable {
     private Label Position;
     @FXML
     private ImageView SettingIcon;
+
+    @FXML
+    void CloseGame(MouseEvent event) {
+
+    }
+
+    @FXML
+    void SaveGame(MouseEvent event) throws IOException {
+        ObjectOutputStream out = null;
+        try{
+            out = new ObjectOutputStream ( new FileOutputStream("out.txt"));
+            SaveObject saveObject=new SaveObject();
+            this.SaveAttributes(saveObject);
+            out.writeObject(saveObject);
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("IO Error in Save Game");
+        }
+        finally {
+            out.close();
+        }
+    }
 
     @FXML
     void MoveHero(MouseEvent event) {
@@ -103,7 +123,6 @@ public final class Game implements Initializable {
     }
 
     private void PlaceIslandsHelper(Integer i) throws CloneNotSupportedException {
-        System.out.println(i+"");
         Island I=Island.islands.get(AllIslandNumbers.get(i)).clone();
         I.IncreseY(230.0);
         I.IncreseX(Game.xCoordinatesIsland.get(i));
@@ -291,4 +310,14 @@ public final class Game implements Initializable {
         Game.AllIslandNumbers.add(6);
     }
 
+    private void SaveAttributes(SaveObject SO){
+        SO.HeroLayoutX=hero.getxPositionLeft();
+        SO.HeroLayoutY=hero.getyPositionBottom();
+        SO.NITP=this.NITP;
+        hero.SaveAttributes(SO);
+    }
+
+    public static void LoadAttributes(SaveObject SO){
+
+    }
 }

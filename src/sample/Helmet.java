@@ -5,17 +5,21 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.Serializable;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class Helmet implements Initializable {
+public class Helmet implements Initializable, Serializable {
     private static final String path=System.getProperty("user.dir")+"\\src\\sample\\assets\\";
+    public static ImageView SwordIV;
+    public static ImageView SpearIV;
     public static Sword sword;
     public static Spear spear;
-    public Weapon CurrentWeapon;
+    private Weapon CurrentWeapon;
 
     @FXML
     private ImageView SpearIcon;
@@ -29,42 +33,65 @@ public class Helmet implements Initializable {
     @FXML
     private Label SwordLabel;
 
+    @FXML
+    void SelectSpear(MouseEvent event) {
+        this.CurrentWeapon=Helmet.spear;
+    }
+
+    @FXML
+    void SelectSword(MouseEvent event) {
+        this.CurrentWeapon=Helmet.sword;
+    }
+
     public Helmet(){
         this.CurrentWeapon=null;
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        ImageView IV;
         try{
-            IV=new ImageView();
-            IV.setImage(new Image(new FileInputStream(Helmet.path+"spear.png")));
-            IV.setPreserveRatio(true);
-            IV.setFitWidth(IV.getBoundsInLocal().getWidth()*0.414556962);
-            Helmet.spear=new Spear(IV);
+            SpearIV=new ImageView();
+            SpearIV.setImage(new Image(new FileInputStream(Helmet.path+"spear.png")));
+            SpearIV.setPreserveRatio(true);
+            SpearIV.setFitWidth(SpearIV.getBoundsInLocal().getWidth()*0.414556962);
 
-            IV=new ImageView();
-            IV.setImage(new Image(new FileInputStream(Helmet.path+"sword.png")));
-            IV.setPreserveRatio(true);
-            IV.setFitWidth(IV.getBoundsInLocal().getWidth()*0.414556962);
-            Helmet.sword=new Sword(IV);
+            SwordIV=new ImageView();
+            SwordIV.setImage(new Image(new FileInputStream(Helmet.path+"sword.png")));
+            SwordIV.setPreserveRatio(true);
+            SwordIV.setFitWidth(SwordIV.getBoundsInLocal().getWidth()*0.414556962);
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
             System.out.println("Error: getting image of weapons");
         }
+        Helmet.spear=new Spear(SpearIV);
+        Helmet.sword=new Sword(SwordIV);
         Spear.setAttributes(SpearIcon,SpearLabel);
         Sword.setAttributes(SwordIcon,SwordLabel);
     }
 
     public void useWeapon(){
-        this.CurrentWeapon=Helmet.sword;
-        if(CurrentWeapon.IsWeaponActive)
+        if(CurrentWeapon!=null && CurrentWeapon.IsWeaponActive)
             CurrentWeapon.Useweapon();
+    }
+
+    public void setCurrentWeapon(Weapon weapon){
+        if(CurrentWeapon!=null)
+            this.CurrentWeapon.removeWeapon();
+        this.CurrentWeapon=weapon;
+        this.CurrentWeapon.ShowIcon();
     }
 
     public Weapon getCurrentWeapon(){
         return this.CurrentWeapon;
     }
 
+    public void SaveAttributes(SaveObject SO){
+        SO.SwordLevel=Helmet.sword.level;
+        SO.SpearLevel=Helmet.spear.level;
+        if(this.CurrentWeapon instanceof Sword)
+            SO.CurrentWeapon="Sword";
+        else
+            SO.CurrentWeapon="Spear";
+    }
 }
