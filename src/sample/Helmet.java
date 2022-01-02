@@ -76,10 +76,12 @@ public class Helmet implements Initializable, Serializable {
     }
 
     public void setCurrentWeapon(Weapon weapon){
-        if(CurrentWeapon!=null)
+        if(CurrentWeapon!=null) {
             this.CurrentWeapon.removeWeapon();
+        }
         this.CurrentWeapon=weapon;
         this.CurrentWeapon.ShowIcon();
+        this.CurrentWeapon.ShowWeapon();
     }
 
     public Weapon getCurrentWeapon(){
@@ -93,5 +95,20 @@ public class Helmet implements Initializable, Serializable {
             SO.CurrentWeapon="Sword";
         else
             SO.CurrentWeapon="Spear";
+    }
+
+    public void LoadAttributes(SaveObject SO){
+        if(SO.CurrentWeapon.equals("Sword")){
+            for(int i=0;i<SO.SpearLevel;i++)
+                this.setCurrentWeapon(Helmet.spear);
+            for(int i=0;i<SO.SwordLevel;i++)
+                this.setCurrentWeapon(Helmet.sword);
+        }
+        else {
+            for(int i=0;i<SO.SwordLevel;i++)
+                this.setCurrentWeapon(Helmet.sword);
+            for(int i=0;i<SO.SpearLevel;i++)
+                this.setCurrentWeapon(Helmet.spear);
+        }
     }
 }

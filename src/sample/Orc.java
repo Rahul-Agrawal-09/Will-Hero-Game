@@ -22,6 +22,7 @@ public abstract class Orc extends GameObject implements Cloneable{
     private static AnchorPane pane;
     private Timeline pushOrcTimeline;
     private Timeline hopOrcTimeline;
+    private static Game game;
 
     //Instance variable->Specific to each object
     private Island myIsland;
@@ -62,15 +63,15 @@ public abstract class Orc extends GameObject implements Cloneable{
             //set red orcs here once added
     }
 
+    public static void setGame(Game G){
+        Orc.game=G;
+    }
+
     private Double LaunchSpeedY=350.0;
     private void HopOrc(){
         hopOrcTimeline =new Timeline();
         hopOrcTimeline.setCycleCount(Animation.INDEFINITE);
-        hopOrcTimeline.getKeyFrames().add(new KeyFrame(Duration.millis(6), event->{
-            if(OrcEliminatesHero()) {
-                Game.hero.EleminateHero();
-                pushOrcTimeline.stop();
-            }
+        hopOrcTimeline.getKeyFrames().add(new KeyFrame(Duration.millis(7), event->{
             if(this.OcsHitIsland()){
                 this.LaunchSpeedY =350.0;
             }
@@ -79,6 +80,10 @@ public abstract class Orc extends GameObject implements Cloneable{
             double p=((this.LaunchSpeedY)-150)/100;
             this.LaunchSpeedY -=1.5;
             super.IncreseY(-p);
+            if(OrcEliminatesHero()) {
+                Game.hero.EleminateHero();
+                pushOrcTimeline.stop();
+            }
         } ));
         hopOrcTimeline.play();
         PushOrcTimeline();
@@ -96,8 +101,8 @@ public abstract class Orc extends GameObject implements Cloneable{
                 this.IncreseX(p);
             }
             if(this.LaunchSpeedX<0){
-                this.myIsland=Game.updateCurrentIsland(this);
-//                System.out.println(this.myIsland);
+                this.myIsland=game.updateCurrentIsland(this);
+                System.out.println(this.myIsland);
                 pushed=false;
                 this.LaunchSpeedX=350.0;
             }

@@ -14,6 +14,8 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public final class BackgroundController implements Initializable {
+    private GameConsole gameConsole;
+
     @FXML
     private ImageView BackgroundImage;
     @FXML
@@ -42,5 +44,9 @@ public final class BackgroundController implements Initializable {
         } ));
         tl.play();
         GameConsole.setPrimaryStage(ParentOfAll);
+    }
+
+    public void setGameConsole(GameConsole GC){
+        this.gameConsole=GC;
     }
 }

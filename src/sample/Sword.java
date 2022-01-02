@@ -28,15 +28,15 @@ public final class Sword extends Weapon {
         Game.Fade(SwordLabel,0.0,1.0,100,1);
         this.ActivateWeapon();
         SwordLabel.setText(super.level+"");
-        if(super.level<=1) {
-            this.IncreseX(Game.hero.getxPositionLeft());
-            this.IncreseY(Game.hero.getyPositionTop() + 40);
-            Weapon.pane.getChildren().add(this.getImageView());
-            SetupTimeline();
-        }
     }
 
-//    public
+    @Override
+    public void ShowWeapon(){
+        this.IncreseX(Game.hero.getxPositionLeft());
+        this.IncreseY(Game.hero.getyPositionTop() + 40);
+        Weapon.pane.getChildren().add(this.getImageView());
+        SetupTimeline();
+    }
 
     //How far the Sword will Attack
     private Double FireLength=300.0;

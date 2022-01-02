@@ -31,4 +31,5 @@ public abstract class Weapon extends GameObject {
     public abstract void Useweapon();
     public abstract void ShowIcon();
     public abstract void SetupTimeline();
+    public abstract void ShowWeapon();
 }

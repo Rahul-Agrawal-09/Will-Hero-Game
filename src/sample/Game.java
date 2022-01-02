@@ -18,11 +18,16 @@ import java.util.ResourceBundle;
 
 public final class Game implements Initializable {
     public volatile static Hero hero;
+    private static GameConsole gameConsole;
+    private static AnchorPane AIP;
+    private static AnchorPane resurgePane;
     private static final ArrayList<Double> xCoordinatesIsland =new ArrayList<>();
     private static final ArrayList<Double> yCoordinatesIsland =new ArrayList<>();
     private static final ArrayList<Integer> AllIslandNumbers=new ArrayList<>();
     private static final ArrayList<Island> AllIsland=new ArrayList<>();
 
+    @FXML
+    private AnchorPane ResurgePane;
     @FXML
     private AnchorPane AllIslandPane;
     @FXML
@@ -40,14 +45,15 @@ public final class Game implements Initializable {
 
     @FXML
     void CloseGame(MouseEvent event) {
-
+        gameConsole.LoadGameConsole();
     }
 
+    private static final String path=System.getProperty("user.dir")+"\\src\\sample\\files\\";
     @FXML
     void SaveGame(MouseEvent event) throws IOException {
         ObjectOutputStream out = null;
         try{
-            out = new ObjectOutputStream ( new FileOutputStream("out.txt"));
+            out = new ObjectOutputStream ( new FileOutputStream(path+"games.txt"));
             SaveObject saveObject=new SaveObject();
             this.SaveAttributes(saveObject);
             out.writeObject(saveObject);
@@ -62,10 +68,8 @@ public final class Game implements Initializable {
 
     @FXML
     void MoveHero(MouseEvent event) {
-        hero.move();
-//        AllIslandPane.setLayoutX(AllIslandPane.getLayoutX()-125);
-//        hero.setCurrentIsland(this.updateCurrentIsland());
         MoveAllIslandPane(400);
+        hero.move();
     }
 
     private boolean settingOpened=false;
@@ -85,6 +89,9 @@ public final class Game implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        Game.resurgePane=ResurgePane;
+        Game.AIP=AllIslandPane;
+        Orc.setGame(this);
         Translate(SettingIcon,0.0,70.0,500,1);
         Island.initialiseIslands(AllIslandPane);  // final
         addAllIsland(); //final
@@ -92,12 +99,17 @@ public final class Game implements Initializable {
         setupHero();    //final
     }
 
-    private void MoveAllIslandPane(Integer moveBackTime){
-        Game.Translate(AllIslandPane,-125.0,0.0,moveBackTime,1);
+    public void ProvideResurgeOptions(){
+        Translate(Game.resurgePane,0.0,450.0,500,1);
+        ResurgeHandler.PutCoinCount(hero);
+//        resurgePane.setTranslateY(450);
     }
 
+    private void MoveAllIslandPane(Integer moveBackTime){
+        Game.Translate(AllIslandPane,-1*(hero.getxPositionLeft()-80)-AllIslandPane.getTranslateX(),0.0,moveBackTime,1);
+    }
 
-    private Integer NITP;
+    private static Integer NITP;
     private void PlaceIslands(){
         //setting up the starting island and other elements
             try {
@@ -122,12 +134,12 @@ public final class Game implements Initializable {
         tl.play();
     }
 
-    private void PlaceIslandsHelper(Integer i) throws CloneNotSupportedException {
+    private static void PlaceIslandsHelper(Integer i) throws CloneNotSupportedException {
         Island I=Island.islands.get(AllIslandNumbers.get(i)).clone();
         I.IncreseY(230.0);
         I.IncreseX(Game.xCoordinatesIsland.get(i));
         I.InitialiseIsland();
-        AllIslandPane.getChildren().add(I.getImageView());
+        AIP.getChildren().add(I.getImageView());
         AllIsland.add(I);
         if(Chest.ChestOnIsland.get(i)!=null)
             Chest.ChestOnIsland.get(i).AddChestToIsland(I,Chest.ChestPositionOffset.get(i));
@@ -158,7 +170,7 @@ public final class Game implements Initializable {
         }
     }
 
-    public static Island updateCurrentIsland(GameObject gameObject){
+    public Island updateCurrentIsland(GameObject gameObject){
         for(Island I:AllIsland){
             if(gameObject.getxPositionRight()>I.getxPositionLeft() &&
                     (gameObject.getxPositionLeft()<I.getxPositionRight())){
@@ -192,10 +204,32 @@ public final class Game implements Initializable {
         fadeTransition.play();
     }
 
-    public void AddChildren(GameObject GO){
-        AllIslandPane.getChildren().add(GO.getImageView());
+    private void SaveAttributes(SaveObject SO){
+        SO.HeroLayoutX=hero.getxPositionLeft();
+        SO.NITP=Game.NITP;
+        hero.SaveAttributes(SO);
     }
 
+    public static void LoadAttributes(SaveObject SO){
+        Game.Translate(Game.AIP,-1*(SO.HeroLayoutX-200),0.0,1000,1);
+        Game.hero.getImageView().setLayoutX(SO.HeroLayoutX);
+        Game.hero.getImageView().setLayoutY(150);
+        try {
+            for(int i =Math.max(Game.NITP, SO.NITP-5); i<SO.NITP; i++) {
+                AllIsland.remove(0);
+                PlaceIslandsHelper(i);
+            }
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+            System.out.println("Error: Adjusting the NITP");
+        }
+        Game.NITP=SO.NITP;
+        Game.hero.LoadAttributes(SO);
+    }
+
+    public static void setGameConsole(GameConsole GC){
+        Game.gameConsole=GC;
+    }
     //Define all Islands of the Game
     private void addAllIsland(){ // all y 230.0 for now
         Game.xCoordinatesIsland.add(35.0);
@@ -310,14 +344,4 @@ public final class Game implements Initializable {
         Game.AllIslandNumbers.add(6);
     }
 
-    private void SaveAttributes(SaveObject SO){
-        SO.HeroLayoutX=hero.getxPositionLeft();
-        SO.HeroLayoutY=hero.getyPositionBottom();
-        SO.NITP=this.NITP;
-        hero.SaveAttributes(SO);
-    }
-
-    public static void LoadAttributes(SaveObject SO){
-
-    }
 }

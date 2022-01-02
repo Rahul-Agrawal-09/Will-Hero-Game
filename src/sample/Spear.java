@@ -28,12 +28,14 @@ public final class Spear extends Weapon{
         Game.Fade(SpearLabel,0.0,1.0,100,1);
         this.ActivateWeapon();
         SpearLabel.setText(super.level+"");
-        if(super.level<=1) {
-            this.IncreseX(Game.hero.getxPositionLeft());
-            this.IncreseY(Game.hero.getyPositionTop() + 40);
-            Weapon.pane.getChildren().add(this.getImageView());
-            SetupTimeline();
-        }
+    }
+
+    @Override
+    public void ShowWeapon(){
+        this.IncreseX(Game.hero.getxPositionLeft());
+        this.IncreseY(Game.hero.getyPositionTop() + 40);
+        Weapon.pane.getChildren().add(this.getImageView());
+        SetupTimeline();
     }
 
     //How far the Spade will move

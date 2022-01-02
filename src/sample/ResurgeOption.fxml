@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+
+<AnchorPane prefHeight="450.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.ResurgeHandler">
+   <children>
+      <ImageView fitHeight="450.0" fitWidth="800.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fitHeight="355.0" fitWidth="335.0" layoutX="233.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@assets/Banner.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="BannerReplayButton" fitHeight="67.0" fitWidth="63.0" layoutX="369.0" layoutY="323.0" onMouseClicked="#ReplayGame" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@assets/BannerPlayButton.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="BannerHomeButton" fitHeight="55.0" fitWidth="54.0" layoutX="295.0" layoutY="331.0" onMouseClicked="#BackToHome" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@assets/BannerHomeButton.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="BannerResurgeButton" fitHeight="55.0" fitWidth="54.0" layoutX="453.0" layoutY="331.0" onMouseClicked="#ResurgeHero" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@assets/BannerResurgeButton.png" />
+         </image>
+      </ImageView>
+      <Label fx:id="CoinCount" alignment="TOP_CENTER" contentDisplay="CENTER" layoutX="362.0" layoutY="206.0" prefHeight="53.0" prefWidth="77.0" text="0" textAlignment="CENTER" textFill="#f2d548">
+         <font>
+            <Font name="Segoe UI Black" size="43.0" />
+         </font>
+      </Label>
+      <Label fx:id="BannerWarning" alignment="TOP_CENTER" layoutX="307.0" layoutY="283.0" opacity="0.0" prefHeight="21.0" prefWidth="186.0" text="NOT ENOUGH COINS" textFill="RED">
+         <font>
+            <Font name="Segoe UI Black" size="15.0" />
+         </font>
+      </Label>
+      <Text fill="#f2d548" layoutX="314.0" layoutY="185.0" strokeWidth="0.0" text="TOTAL COINS" textAlignment="CENTER" wrappingWidth="171.61328125">
+         <font>
+            <Font name="Segoe UI Black" size="24.0" />
+         </font>
+      </Text>
+   </children>
+</AnchorPane>

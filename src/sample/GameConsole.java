@@ -8,10 +8,10 @@ import javafx.scene.Node;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.net.URL;
@@ -19,7 +19,12 @@ import java.util.ResourceBundle;
 
 public class GameConsole implements Initializable {
     private static AnchorPane primaryPane;
+    private static Stage stage;
     private Island H;
+    private Game game;
+    private BackgroundController backgroundController;
+    private static AnchorPane gamePane;
+    private static AnchorPane homePane;
 
     @FXML
     private AnchorPane LoadingPane;
@@ -46,16 +51,23 @@ public class GameConsole implements Initializable {
 
     @FXML
     void ExitGame(MouseEvent event) {
-
+        GameConsole.stage.close();
     }
 
+    public static void setStage(Stage S){
+        GameConsole.stage=S;
+    }
+
+    private static final String path=System.getProperty("user.dir")+"\\src\\sample\\files\\";
     @FXML
     void LoadGame(MouseEvent event) throws IOException {
         ObjectInputStream in = null;
         try {
-            in = new ObjectInputStream (new FileInputStream("out.txt"));
+            in = new ObjectInputStream (new FileInputStream(path+"games.txt"));
             SaveObject SO = (SaveObject) in.readObject();
             System.out.println(SO.HeroLayoutX+" "+ SO.HeroCoins+" "+SO.CurrentWeapon+" "+SO.HeroPosition);
+            LoadNewGamePane();
+            Game.LoadAttributes(SO);
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
             System.out.println("Error: Loading The Game");
@@ -67,15 +79,17 @@ public class GameConsole implements Initializable {
 
     @FXML
     void StartNewGame(MouseEvent event) {
-        Fade(LoadingPane.getChildren().get(0),0.0,1.0,1000);
-        Fade(LoadingPane.getChildren().get(1),0.0,1.0,1000); // circle
-        setBackgroundelements(1000,-1);
-//        sleep(2000);          //problem check sleep
-        LoadNewGamePane();      //comment this to see loading page
+//        Fade(LoadingPane.getChildren().get(0),0.0,1.0,1000);
+//        Fade(LoadingPane.getChildren().get(1),0.0,1.0,1000); // circle
+//        setBackgroundelements(1000,-1);
+        LoadNewGamePane();
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        this.game=new Game();
+        Game.setGameConsole(this);
+        ResurgeHandler.setGameConsole(this);
         setBackgroundelements(1500,1);
     }
 
@@ -159,37 +173,37 @@ public class GameConsole implements Initializable {
         tl.play();
     }
 
-    private void LoadNewGamePane(){
+    public void LoadNewGamePane(){
         //Removed Game console Pane (HomePage)
+        GameConsole.homePane=HomePage;
         primaryPane.getChildren().remove(HomePage);
         //Adding Game Pane
         try {
-            AnchorPane game=FXMLLoader.load(getClass().getResource("Game.fxml"));
-            primaryPane.getChildren().add(game);
+            gamePane =FXMLLoader.load(getClass().getResource("Game.fxml"));
+            primaryPane.getChildren().add(gamePane);
         } catch (IOException e) {
             System.out.println("Error: loading Game.Fxml");
             e.printStackTrace();
         }
     }
 
-
-    private Integer duration;
-    private void sleep(Integer duration){
-        this.duration=duration;
-        Timeline tl=new Timeline();
-        tl.setCycleCount(Animation.INDEFINITE);
-        tl.getKeyFrames().add(new KeyFrame(Duration.millis(5), event->{
-            this.duration-=5;
-            if(this.duration<0) {
-//                LoadNewGamePane();
-                tl.stop();
-            }
-        }));
-        tl.play();
+    public void LoadGameConsole(){
+        primaryPane.getChildren().remove(gamePane);
+        primaryPane.getChildren().add(homePane);
     }
 
     public static void setPrimaryStage(AnchorPane AP){
         GameConsole.primaryPane=AP;
+    }
+
+    public void setBackgroundController(BackgroundController B){
+        this.backgroundController=B;
+        this.backgroundController.setGameConsole(this);
+    }
+
+    public void ReplayGame(){
+        this.LoadGameConsole();
+        LoadNewGamePane();
     }
 
 }

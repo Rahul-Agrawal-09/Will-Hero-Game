@@ -68,9 +68,6 @@ public final class Hero extends GameObject implements Runnable{
         MoveTimeline.setCycleCount(Animation.INDEFINITE);
         MoveTimeline.getKeyFrames().add(new KeyFrame(Duration.millis(3),event->{
             if(DoMove){
-//                this.LaunchSpeedX =300.0;
-//                double p=((this.LaunchSpeedX))/80;
-//                this.LaunchSpeedX -=1.0;
                 HopTimeline.stop();
                 double p=2;
                 this.IncreseX(p);
@@ -78,7 +75,8 @@ public final class Hero extends GameObject implements Runnable{
                 if(total[0]>=125.0){
                     total[0]=0.0;
                     DoMove=false;
-                    this.currentIsland=Game.updateCurrentIsland(this);
+                    if(!Eliminated)
+                        this.currentIsland=game.updateCurrentIsland(this);
                     System.out.println(this.currentIsland);
                     HopTimeline.play();
                     this.PositionLabel.setText(this.Position+"");
@@ -95,7 +93,7 @@ public final class Hero extends GameObject implements Runnable{
     }
 
     public void hop(){
-        this.currentIsland=Game.updateCurrentIsland(this);
+        this.currentIsland=game.updateCurrentIsland(this);
         HopTimeline =new Timeline();
         HopTimeline.setCycleCount(Animation.INDEFINITE);
         HopTimeline.getKeyFrames().add(new KeyFrame(Duration.millis(6), event->{
@@ -105,6 +103,11 @@ public final class Hero extends GameObject implements Runnable{
             double p=((this.LaunchSpeedY)-200)/100;
             this.LaunchSpeedY -=1.5;
             super.IncreseY(-p);
+            if(this.getyPositionTop()>450){
+                game.ProvideResurgeOptions();
+                HopTimeline.stop();
+                MoveTimeline.stop();
+            }
         } ));
         HopTimeline.play();
     }
@@ -119,16 +122,40 @@ public final class Hero extends GameObject implements Runnable{
         return this.MyHelmet;
     }
 
+    public Integer getCoins(){
+        return this.Coins;
+    }
+
+    private boolean Eliminated=false;
     public void EleminateHero(){
-        HopTimeline.stop();
-        MoveTimeline.stop();
+        Eliminated=true;
+        this.currentIsland=null;
         Game.Fade(this.getImageView(),1.0,0.5,20,1);
-        Game.Translate(this.getImageView(),0.0,300.0,1000,1);
     }
 
     public void SaveAttributes(SaveObject SO){
         SO.HeroPosition=this.Position;
         SO.HeroCoins=this.Coins;
-        this.getMyHelmet().SaveAttributes(SO);
+        this.MyHelmet.SaveAttributes(SO);
+    }
+
+    public void LoadAttributes(SaveObject SO){
+        this.currentIsland=game.updateCurrentIsland(this);
+        this.Position=SO.HeroPosition;
+        this.PositionLabel.setText(this.Position+"");
+        this.increaseCoins(SO.HeroCoins);
+        this.MyHelmet.LoadAttributes(SO);
+    }
+
+    public void ResurgeHero(){
+        Game.Fade(this.getImageView(),0.5,1.0,20,1);
+        this.getImageView().setLayoutY(200);
+        this.IncreseX(30.0);
+        this.currentIsland=game.updateCurrentIsland(this);
+        this.LaunchSpeedY=350.0;
+        this.LaunchSpeedX=350.0;
+        Eliminated=false;
+        HopTimeline.play();
+        MoveTimeline.play();
     }
 }
