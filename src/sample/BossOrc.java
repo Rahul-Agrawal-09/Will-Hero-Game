@@ -7,7 +7,7 @@ import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 
 public class BossOrc extends Orc{
-    private Integer Power=2000;
+    private Integer Power=1000;
     private Integer CoinsOnElimination=100;
 
     public BossOrc(ImageView image) {
@@ -28,12 +28,13 @@ public class BossOrc extends Orc{
 
     @Override
     public void StartHop() {
-        this.HopOrc(50.0,350.0);
+        this.HopOrc(150.0,300.0);
     }
 
     @Override
     public void eliminateOrc(){
         super.eliminateOrc();
+        Game.hero.setPushedByBoss(false);
 //        Game.hero.DecareWinner();
     }
 
@@ -47,15 +48,17 @@ public class BossOrc extends Orc{
             if(this.OcsHitIsland()){
                 this.LaunchSpeedY =speedY;
             }
-            if(this.OrcPushedByHero())
-                pushed=true;
+            if(this.OrcPushedByHero()) {
+                pushed = true;
+                Game.hero.setPushedByBoss(true);
+            }
             double p=((this.LaunchSpeedY)-150)/100;
             this.LaunchSpeedY -=1.5;
             super.IncreseY(-p);
-//            if(OrcEliminatesHero()) {
-//                Game.hero.EleminateHero();
-//                pushOrcTimeline.stop();
-//            }
+            if(OrcEliminatesHero()) {
+                Game.hero.EleminateHero();
+                pushOrcTimeline.stop();
+            }
         } ));
         hopOrcTimeline.play();
         PushOrcTimeline(speedX);

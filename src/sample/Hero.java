@@ -22,6 +22,7 @@ public final class Hero extends GameObject implements Runnable{
     private Double LaunchSpeedY;
     private Double LaunchSpeedX; //not used
     private boolean DoMove;
+    private boolean PushedByBoss;
 
     public Hero(ImageView IV, Game game){
         super(IV,0.0);
@@ -63,6 +64,7 @@ public final class Hero extends GameObject implements Runnable{
 
     //To move if mouse clicked
     public void moveTimeline(){
+        this.PushedByBoss=false;
         MoveTimeline=new Timeline();
         final Double[] total = {0.0};
         MoveTimeline.setCycleCount(Animation.INDEFINITE);
@@ -70,7 +72,11 @@ public final class Hero extends GameObject implements Runnable{
             if(DoMove){
                 HopTimeline.stop();
                 double p=2;
-                this.IncreseX(p);
+                if(!PushedByBoss)
+                    this.IncreseX(p);
+                else{
+                    this.IncreseX(p/10);
+                }
                 total[0] +=p;
                 if(total[0]>=125.0){
                     total[0]=0.0;
@@ -86,9 +92,14 @@ public final class Hero extends GameObject implements Runnable{
         MoveTimeline.play();
     }
 
+    public void setPushedByBoss(boolean B){
+        this.PushedByBoss=B;
+    }
+
     public void move(){
         this.DoMove=true;
-        this.Position++;
+        if(!PushedByBoss)
+            this.Position++;
         this.MyHelmet.useWeapon();
     }
 

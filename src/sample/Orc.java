@@ -21,7 +21,7 @@ public abstract class Orc extends GameObject implements Cloneable{
     private static final ArrayList<RedOrc> RedOrcs= new ArrayList<>();
     private static BossOrc Boss;
     protected static AnchorPane pane;
-    private Timeline pushOrcTimeline;
+    protected Timeline pushOrcTimeline;
     protected Timeline hopOrcTimeline;
     private static Game game;
     //Instance variable->Specific to each object
@@ -150,7 +150,7 @@ public abstract class Orc extends GameObject implements Cloneable{
         myIsland=null;
     }
 
-    private boolean OrcEliminatesHero(){
+    protected boolean OrcEliminatesHero(){
         return Game.hero.getxPositionRight() > this.getxPositionLeft() &&
                 Game.hero.getxPositionLeft() < this.getxPositionRight() &&
                 this.getyPositionBottom()-Game.hero.getyPositionTop()<2 &&
