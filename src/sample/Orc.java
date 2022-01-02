@@ -94,10 +94,10 @@ public abstract class Orc extends GameObject implements Cloneable{
             double p=((this.LaunchSpeedY)-150)/100;
             this.LaunchSpeedY -=1.5;
             super.IncreseY(-p);
-//            if(OrcEliminatesHero()) {
-//                Game.hero.EleminateHero();
-//                pushOrcTimeline.stop();
-//            }
+            if(OrcEliminatesHero()) {
+                Game.hero.EleminateHero();
+                pushOrcTimeline.stop();
+            }
         } ));
         hopOrcTimeline.play();
         PushOrcTimeline(speedX);
@@ -151,8 +151,8 @@ public abstract class Orc extends GameObject implements Cloneable{
     }
 
     protected boolean OrcEliminatesHero(){
-        return Game.hero.getxPositionRight() > this.getxPositionLeft() &&
-                Game.hero.getxPositionLeft() < this.getxPositionRight() &&
+        return Game.hero.getxPositionRight()-this.getxPositionLeft()>8 &&
+                this.getxPositionRight()-Game.hero.getxPositionLeft()>8 &&
                 this.getyPositionBottom()-Game.hero.getyPositionTop()<2 &&
                 this.getyPositionBottom()-Game.hero.getyPositionTop()>0;
     }

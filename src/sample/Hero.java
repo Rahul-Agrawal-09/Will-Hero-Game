@@ -169,4 +169,9 @@ public final class Hero extends GameObject implements Runnable{
         HopTimeline.play();
         MoveTimeline.play();
     }
+
+    public void DecareWinner(){
+        game.ProvideResurgeOptions();
+        ResurgeHandler.declareWinner();
+    }
 }

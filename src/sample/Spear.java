@@ -60,21 +60,21 @@ public final class Spear extends Weapon{
     }
 
     //How far the Spade will move
-    private Double FireLength=500.0;
+    private Double FireLength=400.0*this.level;
     public void SetupTimeline() {
         timeline=new Timeline();
         timeline.setCycleCount(Animation.INDEFINITE);
         timeline.getKeyFrames().add(new KeyFrame(Duration.millis(6), event->{
             if(inUse) {
                 if (fire) {
-                    super.IncreseX(5.0);
-                    FireLength -= 5.0;
+                    super.IncreseX(5.0*this.level);
+                    FireLength -= 5.0*this.level;
                     if (FireLength < 0) {
-                        FireLength = 500.0;
+                        FireLength = 400.0*this.level;
                         fire = false;
                     }
                 } else {
-                    super.getImageView().setLayoutX(Game.hero.getxPositionLeft() + 12);
+                    super.getImageView().setLayoutX(Game.hero.getxPositionLeft() );
                     super.getImageView().setLayoutY(Game.hero.getyPositionTop() + 25);
                 }
             }

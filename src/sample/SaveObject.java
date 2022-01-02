@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 public class SaveObject implements Serializable {
 //    AllIslandPanePosition= -(125*HeroPosition)
+
     public int HeroPosition;  //Hero
     public int HeroCoins;  //Hero
     public double HeroLayoutX; //Game

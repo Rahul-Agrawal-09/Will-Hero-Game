@@ -7,7 +7,7 @@ import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 
 public class BossOrc extends Orc{
-    private Integer Power=1000;
+    private Integer Power=800;
     private Integer CoinsOnElimination=100;
 
     public BossOrc(ImageView image) {
@@ -35,7 +35,7 @@ public class BossOrc extends Orc{
     public void eliminateOrc(){
         super.eliminateOrc();
         Game.hero.setPushedByBoss(false);
-//        Game.hero.DecareWinner();
+        Game.hero.DecareWinner();
     }
 
     private Double LaunchSpeedY;

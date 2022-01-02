@@ -49,5 +49,10 @@
             <fx:include source="ResurgeOption.fxml" />
          </children>
       </AnchorPane>
+      <AnchorPane fx:id="SavingForm" layoutY="450.0" prefHeight="450.0" prefWidth="800.0">
+         <children>
+            <fx:include source="SavingForm.fxml" />
+         </children>
+      </AnchorPane>
    </children>
 </AnchorPane>

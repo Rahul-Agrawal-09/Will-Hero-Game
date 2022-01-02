@@ -42,6 +42,9 @@ public final class Game implements Initializable {
     private Label Position;
     @FXML
     private ImageView SettingIcon;
+    @FXML
+    private AnchorPane SavingForm;
+
 
     @FXML
     void CloseGame(MouseEvent event) {
@@ -240,7 +243,7 @@ public final class Game implements Initializable {
         Game.xCoordinatesIsland.add(35.0);
         Game.AllIslandNumbers.add(6);
         Game.xCoordinatesIsland.add(400.0);
-        Game.AllIslandNumbers.add(10);//3
+        Game.AllIslandNumbers.add(3);
         Game.xCoordinatesIsland.add(819.0);
         Game.AllIslandNumbers.add(0);
         Game.xCoordinatesIsland.add(1045.0);
@@ -344,9 +347,9 @@ public final class Game implements Initializable {
         Game.xCoordinatesIsland.add(14675.0);
         Game.AllIslandNumbers.add(3);
         Game.xCoordinatesIsland.add(15100.0);
-        Game.AllIslandNumbers.add(1);
-        Game.xCoordinatesIsland.add(15363.0);
-        Game.AllIslandNumbers.add(6);
+        Game.AllIslandNumbers.add(10);
+//        Game.xCoordinatesIsland.add(15363.0);
+//        Game.AllIslandNumbers.add(6);
     }
 
 }

@@ -16,6 +16,7 @@ public abstract class Weapon extends GameObject {
     public void ActivateWeapon(){
         this.IsWeaponActive=true;
         this.level++;
+        this.getImageView().setFitWidth(this.getImageView().getBoundsInLocal().getWidth()*(1+0.2*(this.level)));
     }
 
     public abstract void Useweapon();

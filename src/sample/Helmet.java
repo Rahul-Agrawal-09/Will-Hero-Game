@@ -60,7 +60,7 @@ public class Helmet implements Initializable {
             SwordIV=new ImageView();
             SwordIV.setImage(new Image(new FileInputStream(Helmet.path+"sword.png")));
             SwordIV.setPreserveRatio(true);
-            SwordIV.setFitWidth(SwordIV.getBoundsInLocal().getWidth()*0.2);
+            SwordIV.setFitWidth(SwordIV.getBoundsInLocal().getWidth()*0.18);
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();

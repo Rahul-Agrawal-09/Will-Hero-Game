@@ -3,7 +3,7 @@ package sample;
 import javafx.scene.image.ImageView;
 
 public final class RedOrc extends Orc{
-    private Integer Power=2;
+    private Integer Power=20;
     private Integer CoinsOnElimination=10;
 
     public RedOrc(ImageView image) {

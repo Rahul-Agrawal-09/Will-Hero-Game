@@ -11,9 +11,12 @@ import java.util.ResourceBundle;
 
 public class ResurgeHandler implements Initializable {
     private static Label CoinLabel;
+    private static Label W1;
+    private static Label W2;
     private static GameConsole gameConsole;
     private final Integer ResurgeCoins=10;
-    private boolean HaveResurged=false;
+    private boolean HaveResurged;
+    private static boolean HaveWon;
 
     @FXML
     private ImageView BannerHomeButton;
@@ -25,21 +28,32 @@ public class ResurgeHandler implements Initializable {
     private Label BannerWarning;
     @FXML
     private Label CoinCount;
+    @FXML
+    private Label winner1;
+    @FXML
+    private Label winner2;
 
     @FXML
     void BackToHome(MouseEvent event) {
         Game.Translate(BannerHomeButton.getParent().getParent(),0.0,450.0,500,-1);
         gameConsole.LoadGameConsole();
+        HaveWon=false;
     }
 
     @FXML
     void ReplayGame(MouseEvent event) {
         Game.Translate(BannerHomeButton.getParent().getParent(),0.0,450.0,500,-1);
         gameConsole.ReplayGame();
+        HaveWon=false;
     }
 
     @FXML
     void ResurgeHero(MouseEvent event) {
+        if(HaveWon){
+            BannerWarning.setText("ALREADY WON");
+            Game.Fade(BannerWarning, 0.0, 1.0, 100, 1);
+            return;
+        }
         if(!HaveResurged) {
             if (Game.hero.getCoins() < this.ResurgeCoins) {
                 BannerWarning.setText("INSUFFICIENT COINS");
@@ -59,8 +73,17 @@ public class ResurgeHandler implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        ResurgeHandler.W1=winner1;
+        ResurgeHandler.W2=winner2;
         ResurgeHandler.CoinLabel=CoinCount;
+        HaveWon=false;
+        HaveResurged=false;
+    }
 
+    public static void declareWinner(){
+        Game.Fade(W1,0.0,1.0,100,1);
+        Game.Fade(W2,0.0,1.0,100,1);
+        HaveWon=true;
     }
 
     public static void PutCoinCount(Hero hero){
