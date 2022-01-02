@@ -15,7 +15,6 @@ public final class WeaponChest  extends Chest{
 
     @Override
     public void OpenChest(Hero hero) {
-        System.out.println(weapon);
         hero.getMyHelmet().setCurrentWeapon(weapon);
         this.getImageView().setImage(Chest.WeaponChests.get(1).getImage());
         this.getImageView().setFitWidth(this.getImageWidth()*1.1);

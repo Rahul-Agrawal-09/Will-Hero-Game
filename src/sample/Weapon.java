@@ -6,7 +6,6 @@ import javafx.scene.layout.AnchorPane;
 
 public abstract class Weapon extends GameObject {
     protected boolean IsWeaponActive=false;
-    protected static AnchorPane pane;
     protected Integer level=0;
 
     public Weapon(ImageView image) {
@@ -17,19 +16,11 @@ public abstract class Weapon extends GameObject {
     public void ActivateWeapon(){
         this.IsWeaponActive=true;
         this.level++;
-//        ShowIcon();
-    }
-
-    public static void setWeaponPane(AnchorPane AP){
-        Weapon.pane=AP;
-    }
-
-    public void removeWeapon(){
-        pane.getChildren().remove(this.getImageView());
     }
 
     public abstract void Useweapon();
+    public abstract void addWeapon();
     public abstract void ShowIcon();
-    public abstract void SetupTimeline();
     public abstract void ShowWeapon();
+    public abstract void removeWeapon();
 }

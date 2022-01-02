@@ -126,7 +126,7 @@ public final class Game implements Initializable {
         Timeline tl=new Timeline();
         tl.setCycleCount(Animation.INDEFINITE);
         tl.getKeyFrames().add(new KeyFrame(Duration.millis(10), event->{
-            if((AllIsland.get(0).getxPositionRight()-hero.getxPositionLeft())<-150){
+            if(NITP<AllIslandNumbers.size() && (AllIsland.get(0).getxPositionRight()-hero.getxPositionLeft())<-150){
                 try {
                     AllIsland.remove(0);
                     PlaceIslandsHelper(NITP);
@@ -141,7 +141,7 @@ public final class Game implements Initializable {
 
     private static void PlaceIslandsHelper(Integer i) throws CloneNotSupportedException {
         Island I=Island.islands.get(AllIslandNumbers.get(i)).clone();
-        I.IncreseY(280.0-I.getOffset());
+        I.IncreseY(280.0-I.getOffset()-(Math.random()*50));
         I.IncreseX(Game.xCoordinatesIsland.get(i));
         I.InitialiseIsland();
         AIP.getChildren().add(I.getImageView());
@@ -154,7 +154,7 @@ public final class Game implements Initializable {
         hero=new Hero(setupHeroImage(),this);
         hero.setPane(AllIslandPane,Position);
         hero.getImageView().setLayoutX(200);
-        hero.getImageView().setLayoutY(200);//Island.islands.get(AllIslandNumbers.get(0)).getyPositionTop()-hero.getImageHeight());
+        hero.getImageView().setLayoutY(100);//Island.islands.get(AllIslandNumbers.get(0)).getyPositionTop()-hero.getImageHeight());
         hero.setCoinLabel(Score);
         Thread t1=new Thread(hero);
         t1.start();
@@ -240,7 +240,7 @@ public final class Game implements Initializable {
         Game.xCoordinatesIsland.add(35.0);
         Game.AllIslandNumbers.add(6);
         Game.xCoordinatesIsland.add(400.0);
-        Game.AllIslandNumbers.add(3);
+        Game.AllIslandNumbers.add(10);//3
         Game.xCoordinatesIsland.add(819.0);
         Game.AllIslandNumbers.add(0);
         Game.xCoordinatesIsland.add(1045.0);

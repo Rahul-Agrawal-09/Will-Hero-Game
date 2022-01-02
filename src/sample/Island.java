@@ -42,10 +42,11 @@ public final class Island extends GameObject {
         Island.Name.put(7,"IslandWideTree.png"); IslandOffset.add(60.28);
         Island.Name.put(8,"IslandNoTree2.png"); IslandOffset.add(0.0);
         Island.Name.put(9,"IslandWideNoTree.png"); IslandOffset.add(0.0);
+        Island.Name.put(10,"BossIsland.png"); IslandOffset.add(50.0);
         try {
+            Helmet.setWeaponPane(AllIslandPane);
             Orc.initialiseOrcs(AllIslandPane); //final
             Chest.initialiseChests(AllIslandPane); //final
-            Weapon.setWeaponPane(AllIslandPane);
             Island.setIslands();
         }
         catch (FileNotFoundException e) {

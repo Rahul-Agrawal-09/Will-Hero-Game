@@ -19,9 +19,9 @@
             <Image url="@assets/Coin.png" />
          </image>
       </ImageView>
-      <Label fx:id="Score" alignment="CENTER_RIGHT" contentDisplay="TOP" layoutX="716.0" layoutY="2.0" prefHeight="45.0" prefWidth="37.0" text="0" textAlignment="CENTER" textFill="#f2d222" textOverrun="CLIP">
+      <Label fx:id="Score" alignment="CENTER_RIGHT" contentDisplay="TOP" layoutX="684.0" layoutY="2.0" prefHeight="45.0" prefWidth="69.0" text="0" textAlignment="CENTER" textFill="#f2d222" textOverrun="CLIP">
          <font>
-            <Font name="Segoe UI Black" size="30.0" />
+            <Font name="Segoe UI Black" size="28.0" />
          </font>
       </Label>
       <ImageView fx:id="SaveGameButton" fitHeight="45.0" fitWidth="45.0" layoutX="5.0" layoutY="5.0" onMouseClicked="#SaveGame" opacity="0.0" pickOnBounds="true" preserveRatio="true">

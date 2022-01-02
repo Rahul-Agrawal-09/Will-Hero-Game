@@ -19,18 +19,21 @@ public abstract class Orc extends GameObject implements Cloneable{
     public static final ArrayList<ArrayList<Double>> OrcPositionOffset=new ArrayList<>();
     private static final ArrayList<GreenOrc> GreenOrcs= new ArrayList<>();
     private static final ArrayList<RedOrc> RedOrcs= new ArrayList<>();
-    private static AnchorPane pane;
+    private static BossOrc Boss;
+    protected static AnchorPane pane;
     private Timeline pushOrcTimeline;
-    private Timeline hopOrcTimeline;
+    protected Timeline hopOrcTimeline;
     private static Game game;
-
     //Instance variable->Specific to each object
     private Island myIsland;
+
+    public abstract Integer getCoinsOnElimination();
+    public abstract void ReducePower();
+    public abstract void StartHop();
 
     public Orc(ImageView image) {
         super(image, 0.0);
     }
-
 
     protected void AddOrcToIsland(Island island, Double offset) {
         try {
@@ -39,7 +42,7 @@ public abstract class Orc extends GameObject implements Cloneable{
             orc.getImageView().setLayoutX(island.getxPositionLeft()+offset);
             orc.IncreseY(island.getyPositionTop()-orc.getImageHeight());
             Orc.pane.getChildren().add(orc.getImageView());
-            orc.HopOrc();
+            orc.StartHop();
         } catch (CloneNotSupportedException e) {
             e.printStackTrace();
         }
@@ -52,28 +55,39 @@ public abstract class Orc extends GameObject implements Cloneable{
 
     public static void initialiseOrcs(AnchorPane AP) throws FileNotFoundException {
         Orc.pane=AP;
-        for(int i = 1; i<=3; i++){
+        for(int i = 1; i<=4; i++){
             FileInputStream input = new FileInputStream(Orc.path+"orcs"+i+".png");
             ImageView IV=new ImageView();
             IV.setImage(new Image(input));
             IV.setPreserveRatio(true);
             IV.setFitWidth(IV.getBoundsInLocal().getWidth()*0.414556962);
-            Orc.GreenOrcs.add(new GreenOrc(IV));
+            if(i==4)
+                Boss=new BossOrc(IV);
+            else
+                Orc.GreenOrcs.add(new GreenOrc(IV));
         }
-            //set red orcs here once added
+        for(int i = 5; i<=6; i++){
+            FileInputStream input = new FileInputStream(Orc.path+"orcs"+i+".png");
+            ImageView IV=new ImageView();
+            IV.setImage(new Image(input));
+            IV.setPreserveRatio(true);
+            IV.setFitWidth(IV.getBoundsInLocal().getWidth()*0.414556962);
+            Orc.RedOrcs.add(new RedOrc(IV));
+        }
     }
 
     public static void setGame(Game G){
         Orc.game=G;
     }
 
-    private Double LaunchSpeedY=350.0;
-    private void HopOrc(){
+    private Double LaunchSpeedY;
+    protected void HopOrc(Double speedX,Double speedY){
+        LaunchSpeedY=speedY;
         hopOrcTimeline =new Timeline();
         hopOrcTimeline.setCycleCount(Animation.INDEFINITE);
-        hopOrcTimeline.getKeyFrames().add(new KeyFrame(Duration.millis(10), event->{
+        hopOrcTimeline.getKeyFrames().add(new KeyFrame(Duration.millis(8), event->{
             if(this.OcsHitIsland()){
-                this.LaunchSpeedY =350.0;
+                this.LaunchSpeedY =speedY;
             }
             if(this.OrcPushedByHero())
                 pushed=true;
@@ -86,12 +100,13 @@ public abstract class Orc extends GameObject implements Cloneable{
 //            }
         } ));
         hopOrcTimeline.play();
-        PushOrcTimeline();
+        PushOrcTimeline(speedX);
     }
 
-    private boolean pushed=false;
-    private Double LaunchSpeedX=350.0;
-    private void PushOrcTimeline(){
+    protected boolean pushed=false;
+    private Double LaunchSpeedX;
+    protected void PushOrcTimeline(Double speedX){
+        LaunchSpeedX=speedX;
         pushOrcTimeline =new Timeline();
         pushOrcTimeline.setCycleCount(Animation.INDEFINITE);
         pushOrcTimeline.getKeyFrames().add(new KeyFrame(Duration.millis(4), event->{
@@ -104,21 +119,23 @@ public abstract class Orc extends GameObject implements Cloneable{
                 this.myIsland=game.updateCurrentIsland(this);
                 System.out.println(this.myIsland);
                 pushed=false;
-                this.LaunchSpeedX=350.0;
+                this.LaunchSpeedX=speedX;
             }
-            if(this.OrcHitByWeapon())
+            if(this.getyPositionTop()>450)
                 this.eliminateOrc();
+            if(this.OrcHitByWeapon())
+                this.ReducePower();
         } ));
         pushOrcTimeline.play();
     }
 
-    private boolean OcsHitIsland(){
+    protected boolean OcsHitIsland(){
         if(myIsland==null)
             return false;
         return this.getyPositionBottom() > myIsland.getyPositionTop();
     }
 
-    private boolean OrcPushedByHero(){
+    protected boolean OrcPushedByHero(){
         return Game.hero.getyPositionBottom() > this.getyPositionTop() &&
                 Game.hero.getyPositionTop() < this.getyPositionBottom() &&
                 Game.hero.getxPositionRight() > this.getxPositionLeft() &&
@@ -126,7 +143,10 @@ public abstract class Orc extends GameObject implements Cloneable{
     }
 
     public void eliminateOrc(){
+        Game.hero.increaseCoins(this.getCoinsOnElimination());
         Orc.pane.getChildren().remove(this.getImageView());
+        hopOrcTimeline.stop();
+        pushOrcTimeline.stop();
         myIsland=null;
     }
 
@@ -155,21 +175,24 @@ public abstract class Orc extends GameObject implements Cloneable{
         //for Island 0
         orcs=new ArrayList<>();
         offset=new ArrayList<>();
-
+        orcs.add(Orc.GreenOrcs.get(0));
+        offset.add(100.0);
         OrcOnIsland.add(orcs);
         OrcPositionOffset.add(offset);
 
         //for Island 1
         orcs=new ArrayList<>();
         offset=new ArrayList<>();
-
+        orcs.add(Orc.GreenOrcs.get(1));
+        offset.add(60.0);
         OrcOnIsland.add(orcs);
         OrcPositionOffset.add(offset);
 
         //for Island 2
         orcs=new ArrayList<>();
         offset=new ArrayList<>();
-
+        orcs.add(Orc.RedOrcs.get(1));
+        offset.add(20.0);
         OrcOnIsland.add(orcs);
         OrcPositionOffset.add(offset);
 
@@ -177,7 +200,7 @@ public abstract class Orc extends GameObject implements Cloneable{
         orcs=new ArrayList<>();
         offset=new ArrayList<>();
         orcs.add(Orc.GreenOrcs.get(0));
-        offset.add(40.0);
+        offset.add(150.0);
         OrcOnIsland.add(orcs);
         OrcPositionOffset.add(offset);
 
@@ -200,8 +223,8 @@ public abstract class Orc extends GameObject implements Cloneable{
         offset=new ArrayList<>();
 //        orcs.add(Orc.GreenOrcs.get(0));
 //        offset.add(150.0);
-        orcs.add(Orc.GreenOrcs.get(1));
-        offset.add(200.0);
+//        orcs.add(Orc.GreenOrcs.get(1));
+//        offset.add(200.0);
         OrcOnIsland.add(orcs);
         OrcPositionOffset.add(offset);
 
@@ -215,14 +238,26 @@ public abstract class Orc extends GameObject implements Cloneable{
         //for Island 8
         orcs=new ArrayList<>();
         offset=new ArrayList<>();
-
+        orcs.add(Orc.GreenOrcs.get(2));
+        offset.add(20.0);
+        orcs.add(Orc.RedOrcs.get(0));
+        offset.add(180.0);
         OrcOnIsland.add(orcs);
         OrcPositionOffset.add(offset);
 
         //for Island 9
         orcs=new ArrayList<>();
         offset=new ArrayList<>();
+        orcs.add(Orc.GreenOrcs.get(1));
+        offset.add(200.0);
+        OrcOnIsland.add(orcs);
+        OrcPositionOffset.add(offset);
 
+        //for Island 10 Boss Island
+        orcs=new ArrayList<>();
+        offset=new ArrayList<>();
+        orcs.add(Boss);
+        offset.add(100.0);
         OrcOnIsland.add(orcs);
         OrcPositionOffset.add(offset);
 

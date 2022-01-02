@@ -91,11 +91,26 @@ public abstract class Chest extends GameObject implements Cloneable {
 
     //Define all Chest of the Game
     public static void addAllChest(){
-        ChestOnIsland.put(0,new CoinChest(CoinChests.get(0))); //new WeaponChest(WeaponChests.get(0))
-        ChestPositionOffset.put(0,250);
+        //weapon Chests
         ChestOnIsland.put(1,new WeaponChest(WeaponChests.get(0)));
-        ChestPositionOffset.put(1,250);
-//        ChestOnIsland.put(0,new WeaponChest(WeaponChests.get(0)));
-//        ChestPositionOffset.put(0,250);
+        ChestPositionOffset.put(1,200);
+        ChestOnIsland.put(18,new WeaponChest(WeaponChests.get(0)));
+        ChestPositionOffset.put(18,250);
+        ChestOnIsland.put(37,new WeaponChest(WeaponChests.get(0)));
+        ChestPositionOffset.put(37,100);
+
+        //Coin Chest
+        ChestOnIsland.put(11,new CoinChest(CoinChests.get(0)));
+        ChestPositionOffset.put(11,10);
+        ChestOnIsland.put(15,new CoinChest(CoinChests.get(0)));
+        ChestPositionOffset.put(15,100);
+        ChestOnIsland.put(20,new CoinChest(CoinChests.get(0)));
+        ChestPositionOffset.put(20,50);
+        ChestOnIsland.put(25,new CoinChest(CoinChests.get(0)));
+        ChestPositionOffset.put(25,30);
+        ChestOnIsland.put(47,new CoinChest(CoinChests.get(0)));
+        ChestPositionOffset.put(47,80);
+        ChestOnIsland.put(51,new CoinChest(CoinChests.get(0)));
+        ChestPositionOffset.put(51,70);
     }
 }
