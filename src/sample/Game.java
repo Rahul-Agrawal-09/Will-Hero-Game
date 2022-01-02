@@ -136,7 +136,7 @@ public final class Game implements Initializable {
 
     private static void PlaceIslandsHelper(Integer i) throws CloneNotSupportedException {
         Island I=Island.islands.get(AllIslandNumbers.get(i)).clone();
-        I.IncreseY(230.0);
+        I.IncreseY(280.0-I.getOffset());
         I.IncreseX(Game.xCoordinatesIsland.get(i));
         I.InitialiseIsland();
         AIP.getChildren().add(I.getImageView());

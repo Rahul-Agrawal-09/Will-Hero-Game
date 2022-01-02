@@ -13,7 +13,7 @@
             <Font name="Segoe UI Black" size="36.0" />
          </font>
       </Label>
-      <AnchorPane fx:id="AllIslandPane" onMouseClicked="#MoveHero" prefHeight="450.0" prefWidth="5000.0" />
+      <AnchorPane fx:id="AllIslandPane" onMouseClicked="#MoveHero" />
       <ImageView fitWidth="30.0" layoutX="760.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@assets/Coin.png" />

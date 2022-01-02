@@ -71,7 +71,7 @@ public abstract class Orc extends GameObject implements Cloneable{
     private void HopOrc(){
         hopOrcTimeline =new Timeline();
         hopOrcTimeline.setCycleCount(Animation.INDEFINITE);
-        hopOrcTimeline.getKeyFrames().add(new KeyFrame(Duration.millis(7), event->{
+        hopOrcTimeline.getKeyFrames().add(new KeyFrame(Duration.millis(10), event->{
             if(this.OcsHitIsland()){
                 this.LaunchSpeedY =350.0;
             }
@@ -80,10 +80,10 @@ public abstract class Orc extends GameObject implements Cloneable{
             double p=((this.LaunchSpeedY)-150)/100;
             this.LaunchSpeedY -=1.5;
             super.IncreseY(-p);
-            if(OrcEliminatesHero()) {
-                Game.hero.EleminateHero();
-                pushOrcTimeline.stop();
-            }
+//            if(OrcEliminatesHero()) {
+//                Game.hero.EleminateHero();
+//                pushOrcTimeline.stop();
+//            }
         } ));
         hopOrcTimeline.play();
         PushOrcTimeline();
