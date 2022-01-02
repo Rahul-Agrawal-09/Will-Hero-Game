@@ -21,10 +21,10 @@ public final class Game implements Initializable {
     private static GameConsole gameConsole;
     private static AnchorPane AIP;
     private static AnchorPane resurgePane;
-    private static final ArrayList<Double> xCoordinatesIsland =new ArrayList<>();
-    private static final ArrayList<Double> yCoordinatesIsland =new ArrayList<>();
-    private static final ArrayList<Integer> AllIslandNumbers=new ArrayList<>();
-    private static final ArrayList<Island> AllIsland=new ArrayList<>();
+    private static ArrayList<Double> xCoordinatesIsland;
+    private static ArrayList<Double> yCoordinatesIsland;
+    private static ArrayList<Integer> AllIslandNumbers;
+    private static ArrayList<Island> AllIsland;
 
     @FXML
     private AnchorPane ResurgePane;
@@ -89,8 +89,13 @@ public final class Game implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        xCoordinatesIsland =new ArrayList<>();
+        yCoordinatesIsland =new ArrayList<>();
+        AllIslandNumbers =new ArrayList<>();
+        AllIsland =new ArrayList<>();
         Game.resurgePane=ResurgePane;
         Game.AIP=AllIslandPane;
+        Game.NITP=0;
         Orc.setGame(this);
         Translate(SettingIcon,0.0,70.0,500,1);
         Island.initialiseIslands(AllIslandPane);  // final
@@ -109,7 +114,7 @@ public final class Game implements Initializable {
         Game.Translate(AllIslandPane,-1*(hero.getxPositionLeft()-80)-AllIslandPane.getTranslateX(),0.0,moveBackTime,1);
     }
 
-    private static Integer NITP;
+    private static Integer NITP=0;
     private void PlaceIslands(){
         //setting up the starting island and other elements
             try {
