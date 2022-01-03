@@ -62,5 +62,10 @@
             <Image url="@assets/PlayButton.png" />
          </image>
       </ImageView>
+      <AnchorPane fx:id="LoadingPaneList" layoutY="450.0" prefHeight="450.0" prefWidth="800.0">
+         <children>
+            <fx:include source="Loading.fxml" />
+         </children>
+      </AnchorPane>
    </children>
 </AnchorPane>

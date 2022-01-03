@@ -45,28 +45,14 @@ public final class Game implements Initializable {
     @FXML
     private AnchorPane SavingForm;
 
-
     @FXML
     void CloseGame(MouseEvent event) {
         gameConsole.LoadGameConsole();
     }
 
-    private static final String path=System.getProperty("user.dir")+"\\src\\sample\\files\\";
     @FXML
-    void SaveGame(MouseEvent event) throws IOException {
-        ObjectOutputStream out = null;
-        try{
-            out = new ObjectOutputStream ( new FileOutputStream(path+"games.txt"));
-            SaveObject saveObject=new SaveObject();
-            this.SaveAttributes(saveObject);
-            out.writeObject(saveObject);
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.out.println("IO Error in Save Game");
-        }
-        finally {
-            out.close();
-        }
+    void SaveGame(MouseEvent event) {
+        Game.Translate(SavingForm,0.0,450.0,500,-1);
     }
 
     @FXML
@@ -99,7 +85,9 @@ public final class Game implements Initializable {
         Game.resurgePane=ResurgePane;
         Game.AIP=AllIslandPane;
         Game.NITP=0;
+        TNT.setpane(AllIslandPane);
         Orc.setGame(this);
+        Saving.setGame(this);
         Translate(SettingIcon,0.0,70.0,500,1);
         Island.initialiseIslands(AllIslandPane);  // final
         addAllIsland(); //final
@@ -212,7 +200,7 @@ public final class Game implements Initializable {
         fadeTransition.play();
     }
 
-    private void SaveAttributes(SaveObject SO){
+    public void SaveAttributes(SaveObject SO){
         SO.HeroLayoutX=hero.getxPositionLeft();
         SO.NITP=Game.NITP;
         hero.SaveAttributes(SO);

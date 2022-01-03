@@ -152,7 +152,7 @@ public abstract class Orc extends GameObject implements Cloneable{
 
     protected boolean OrcEliminatesHero(){
         return Game.hero.getxPositionRight()-this.getxPositionLeft()>8 &&
-                this.getxPositionRight()-Game.hero.getxPositionLeft()>8 &&
+                Game.hero.getxPositionLeft()-this.getxPositionRight()<-8 &&
                 this.getyPositionBottom()-Game.hero.getyPositionTop()<2 &&
                 this.getyPositionBottom()-Game.hero.getyPositionTop()>0;
     }

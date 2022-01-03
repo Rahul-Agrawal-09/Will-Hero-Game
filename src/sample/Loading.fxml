@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="450.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Loading">
+   <children>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#00000034" height="450.0" stroke="TRANSPARENT" strokeType="INSIDE" width="800.0" />
+      <Label layoutX="270.0" layoutY="37.0" text="GAMES TO LOAD" textFill="#00adf1">
+         <font>
+            <Font name="Segoe UI Black" size="31.0" />
+         </font>
+      </Label>
+      <VBox alignment="TOP_CENTER" layoutX="130.0" layoutY="104.0" prefHeight="316.0" prefWidth="540.0">
+         <children>
+            <Label fx:id="L1" onMouseClicked="#L1Load" prefHeight="62.0" prefWidth="556.0" textFill="#514c7c">
+               <font>
+                  <Font name="Segoe UI Black" size="31.0" />
+               </font>
+            </Label>
+            <Label fx:id="L2" onMouseClicked="#L2Load" prefHeight="62.0" prefWidth="556.0" textFill="#514c7c">
+               <font>
+                  <Font name="Segoe UI Black" size="31.0" />
+               </font>
+            </Label>
+            <Label fx:id="L3" onMouseClicked="#L3Load" prefHeight="62.0" prefWidth="556.0" textFill="#514c7c">
+               <font>
+                  <Font name="Segoe UI Black" size="31.0" />
+               </font>
+            </Label>
+            <Label fx:id="L4" onMouseClicked="#L4Load" prefHeight="62.0" prefWidth="556.0" textFill="#514c7c">
+               <font>
+                  <Font name="Segoe UI Black" size="31.0" />
+               </font>
+            </Label>
+            <Label fx:id="L5" onMouseClicked="#L5Load" prefHeight="62.0" prefWidth="540.0" textFill="#514c7c">
+               <font>
+                  <Font name="Segoe UI Black" size="31.0" />
+               </font>
+            </Label>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

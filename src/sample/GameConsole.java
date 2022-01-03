@@ -15,6 +15,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class GameConsole implements Initializable {
@@ -48,6 +49,8 @@ public class GameConsole implements Initializable {
     private ImageView WillHeroName;
     @FXML
     private ImageView orcs;
+    @FXML
+    private AnchorPane LoadingPaneList;
 
     @FXML
     void ExitGame(MouseEvent event) {
@@ -61,27 +64,13 @@ public class GameConsole implements Initializable {
     private static final String path=System.getProperty("user.dir")+"\\src\\sample\\files\\";
     @FXML
     void LoadGame(MouseEvent event) throws IOException {
-        ObjectInputStream in = null;
-        try {
-            in = new ObjectInputStream (new FileInputStream(path+"games.txt"));
-            SaveObject SO = (SaveObject) in.readObject();
-            System.out.println(SO.HeroLayoutX+" "+ SO.HeroCoins+" "+SO.CurrentWeapon+" "+SO.HeroPosition);
-            LoadNewGamePane();
-            Game.LoadAttributes(SO);
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
-            System.out.println("Error: Loading The Game");
-        }
-        finally {
-            in.close();
-        }
+        Loading.setparent(LoadingPaneList,this);
+        Game.Translate(LoadingPaneList,0.0,450.0,500,-1);
+        Loading.show();
     }
 
     @FXML
     void StartNewGame(MouseEvent event) {
-//        Fade(LoadingPane.getChildren().get(0),0.0,1.0,1000);
-//        Fade(LoadingPane.getChildren().get(1),0.0,1.0,1000); // circle
-//        setBackgroundelements(1000,-1);
         LoadNewGamePane();
     }
 
