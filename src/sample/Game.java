@@ -86,6 +86,7 @@ public final class Game implements Initializable {
         Game.AIP=AllIslandPane;
         Game.NITP=0;
         TNT.setpane(AllIslandPane);
+        TNT.setPlacement();
         Orc.setGame(this);
         Saving.setGame(this);
         Translate(SettingIcon,0.0,70.0,500,1);
@@ -137,6 +138,8 @@ public final class Game implements Initializable {
         I.InitialiseIsland();
         AIP.getChildren().add(I.getImageView());
         AllIsland.add(I);
+        if(AllIslandNumbers.get(i)==3)
+            TNT.PlaceTNT(I);
         if(Chest.ChestOnIsland.get(i)!=null)
             Chest.ChestOnIsland.get(i).AddChestToIsland(I,Chest.ChestPositionOffset.get(i));
     }

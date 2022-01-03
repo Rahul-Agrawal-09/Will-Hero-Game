@@ -2,6 +2,7 @@ package sample;
 
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
+import javafx.animation.ScaleTransition;
 import javafx.animation.Timeline;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -10,12 +11,14 @@ import javafx.util.Duration;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.HashMap;
 
 public class TNT extends GameObject implements Obstacle,Cloneable{
     private static TNT tnt;
     private static AnchorPane pane;
     private Timeline BlastTimeline;
     private Integer TimetoBlast;
+    public static HashMap<Integer,Double> Placement=new HashMap<>();
 
     public TNT(ImageView image) {
         super(image, 0.0);
@@ -32,13 +35,8 @@ public class TNT extends GameObject implements Obstacle,Cloneable{
         return clone;
     }
 
-    private void setupHero(){
+    private static void setupTNT(){
         tnt=new TNT(setupTNTImage());
-//        tnt.setPane(AllIslandPane,Position);
-//        hero.getImageView().setLayoutX(200);
-//        hero.getImageView().setLayoutY(100);//Island.islands.get(AllIslandNumbers.get(0)).getyPositionTop()-hero.getImageHeight());
-//        hero.setCoinLabel(Score);
-
     }
 
     private boolean isActivated;
@@ -48,7 +46,7 @@ public class TNT extends GameObject implements Obstacle,Cloneable{
         BlastTimeline.setCycleCount(Animation.INDEFINITE);
         BlastTimeline.getKeyFrames().add(new KeyFrame(Duration.millis(10), event->{
             if(HasColided())
-                isActivated=true;
+                ActivateObstacle();
             if(isActivated){
                 TimetoBlast=TimetoBlast-10;
                 if(TimetoBlast<=0)
@@ -58,7 +56,7 @@ public class TNT extends GameObject implements Obstacle,Cloneable{
         BlastTimeline.play();
     }
 
-    private ImageView setupTNTImage(){
+    private static ImageView setupTNTImage(){
         FileInputStream input;
         try {
             input = new FileInputStream(System.getProperty("user.dir")+"\\src\\sample\\assets\\TNT.png");
@@ -74,19 +72,34 @@ public class TNT extends GameObject implements Obstacle,Cloneable{
     }
 
     private void Blast(){
-//        this.
-        pane.getChildren().remove(tnt.getImageView());
+        this.getImageView().preserveRatioProperty();
+        ScaleTransition ST=new ScaleTransition();
+        ST.setNode(this.getImageView());
+        ST.setDuration(Duration.millis(1000));
+        ST.setByX(200);
+        ST.setByY(200);
+        ST.play();
+        pane.getChildren().remove(this.getImageView());
+        if(inRange())
+            Game.hero.EleminateHero();
     }
 
+    public static void PlaceTNT(Island I) throws CloneNotSupportedException {
+        TNT tnt=TNT.tnt.clone();
+        pane.getChildren().add(tnt.getImageView());
+        tnt.IncreseY(I.getyPositionTop()-tnt.getImageWidth());
+        tnt.IncreseX(I.getxPositionLeft()+50);
+    }
 
 
     public static void setpane(AnchorPane AP){
         TNT.pane=AP;
+        setupTNT();
     }
 
     @Override
     public void ActivateObstacle() {
-
+        isActivated=true;
     }
 
     @Override
@@ -97,5 +110,20 @@ public class TNT extends GameObject implements Obstacle,Cloneable{
                     Game.hero.getyPositionBottom()>this.getyPositionTop())
             return true;
         return false;
+    }
+
+    @Override
+    public boolean inRange() {
+        if(Game.hero.getxPositionLeft()<this.getxPositionRight() &&
+                Game.hero.getxPositionRight()>this.getxPositionLeft() &&
+                Game.hero.getyPositionTop()<this.getyPositionBottom() &&
+                Game.hero.getyPositionBottom()>this.getyPositionTop())
+            return true;
+        return false;
+    }
+
+
+    public static void setPlacement(){
+        TNT.Placement.put(1,100.0);
     }
 }
